@@ -1,0 +1,52 @@
+package com.dine.repository.model;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * 结算订单表
+ *
+ * Created by FSQ
+ * CopyRight https://www.fuint.cn
+ */
+@Getter
+@Setter
+@TableName("mt_settlement_order")
+@Schema(name = "MtSettlementOrder对象", description = "结算订单表")
+public class MtSettlementOrder implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Schema(description = "自增ID")
+    @TableId(value = "ID", type = IdType.AUTO)
+    private Integer id;
+
+    @Schema(description = "结算ID")
+    private Integer settlementId;
+
+    @Schema(description = "订单ID")
+    private Integer orderId;
+
+    @Schema(description = "创建时间")
+    private Date createTime;
+
+    @Schema(description = "更新时间")
+    private Date updateTime;
+
+    @Schema(description = "备注说明")
+    private String description;
+
+    @Schema(description = "最后操作人")
+    private String operator;
+
+    @Schema(description = "状态，A正常；D删除")
+    private String status;
+
+}

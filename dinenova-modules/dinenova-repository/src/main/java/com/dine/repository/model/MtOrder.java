@@ -1,0 +1,119 @@
+package com.dine.repository.model;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * 订单表
+ *
+ * Created by FSQ
+ * CopyRight https://www.fuint.cn
+ */
+@Getter
+@Setter
+@TableName("mt_order")
+@Schema(name = "MtOrder对象", description = "订单表")
+public class MtOrder implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Schema(description = "自增ID")
+    @TableId(value = "ID", type = IdType.AUTO)
+    private Integer id;
+
+    @Schema(description = "订单类型")
+    private String type;
+
+    @Schema(description = "支付类型")
+    private String payType;
+
+    @Schema(description = "订单模式")
+    private String orderMode;
+
+    @Schema(description = "订单号")
+    private String orderSn;
+
+    @Schema(description = "卡券ID")
+    private Integer couponId;
+
+    @Schema(description = "商户ID")
+    private Integer merchantId;
+
+    @Schema(description = "所属店铺ID")
+    private Integer storeId;
+
+    @Schema(description = "所属桌码ID")
+    private Integer tableId;
+
+    @Schema(description = "用户ID")
+    private Integer userId;
+
+    @Schema(description = "核销验证码")
+    private String verifyCode;
+
+    @Schema(description = "是否游客")
+    private String isVisitor;
+
+    @Schema(description = "订单金额")
+    private BigDecimal amount;
+
+    @Schema(description = "支付金额")
+    private BigDecimal payAmount;
+
+    @Schema(description ="结算状态")
+    private String settleStatus;
+
+    @Schema(description = "使用积分数量")
+    private Integer usePoint;
+
+    @Schema(description = "积分金额")
+    private BigDecimal pointAmount;
+
+    @Schema(description = "折扣金额")
+    private BigDecimal discount;
+
+    @Schema(description = "配送费用")
+    private BigDecimal deliveryFee;
+
+    @Schema(description = "订单参数")
+    private String param;
+
+    @Schema(description = "物流信息")
+    private String expressInfo;
+
+    @Schema(description = "用户备注")
+    private String remark;
+
+    @Schema(description = "创建时间")
+    private Date createTime;
+
+    @Schema(description = "更新时间")
+    private Date updateTime;
+
+    @Schema(description = "订单状态")
+    private String status;
+
+    @Schema(description = "支付时间")
+    private Date payTime;
+
+    @Schema(description = "支付状态")
+    private String payStatus;
+
+    @Schema(description = "操作员工")
+    private Integer staffId;
+
+    @Schema(description = "最后操作人")
+    private String operator;
+
+    @Schema(description = "分佣提成计算状态")
+    private String commissionStatus;
+
+}

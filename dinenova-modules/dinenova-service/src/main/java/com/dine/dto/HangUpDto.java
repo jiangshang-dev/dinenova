@@ -1,0 +1,39 @@
+package com.dine.dto;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+import com.dine.repository.model.MtUser;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+
+/**
+ * 收银挂单实体类
+ *
+ * Created by FSQ
+ * CopyRight https://www.fuint.cn
+ */
+@Getter
+@Setter
+public class HangUpDto {
+
+    @Schema(description = "挂单号")
+    private String hangNo;
+
+    @Schema(description = "是否空白")
+    private Boolean isEmpty;
+
+    @Schema(description = "会员信息")
+    private MtUser memberInfo;
+
+    @Schema(description = "件数")
+    private Integer num;
+
+    @Schema(description = "金额")
+    private BigDecimal amount;
+
+    @Schema(description = "时间")
+    private String dateTime;
+
+}

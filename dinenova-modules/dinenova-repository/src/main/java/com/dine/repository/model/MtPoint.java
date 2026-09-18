@@ -1,0 +1,61 @@
+package com.dine.repository.model;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * 会员积分记录表
+ *
+ * Created by FSQ
+ * CopyRight https://www.fuint.cn
+ */
+@Getter
+@Setter
+@TableName("mt_point")
+@Schema(name = "MtPoint对象", description = "会员积分记录表")
+public class MtPoint implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Schema(description = "自增ID")
+    @TableId(value = "ID", type = IdType.AUTO)
+    private Integer id;
+
+    @Schema(description = "商户ID")
+    private Integer merchantId;
+
+    @Schema(description = "所属店铺ID")
+    private Integer storeId;
+
+    @Schema(description = "用户ID")
+    private Integer userId;
+
+    @Schema(description = "订单号")
+    private String orderSn;
+
+    @Schema(description = "积分变化数量")
+    private Integer amount;
+
+    @Schema(description = "创建时间")
+    private Date createTime;
+
+    @Schema(description = "更新时间")
+    private Date updateTime;
+
+    @Schema(description = "备注说明")
+    private String description;
+
+    @Schema(description = "最后操作人")
+    private String operator;
+
+    @Schema(description = "状态，A正常；D作废")
+    private String status;
+
+}

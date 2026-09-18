@@ -1,0 +1,124 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: dinenova
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  data:
+    redis:
+      database: 0
+      host: 139.198.181.54
+      port: 6379
+      password: Dcp#7ujm
+      timeout: 10s
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com.dine: info
+
+# 系统名称
+system:
+  name: 仁信点餐系统
+
+# 前端h5地址
+website:
+  url: https://www.fuint.cn/h5/
+
+# 上传图片
+images:
+  root: ${user.home}/dinenova/upload
+  path: /static/uploadImages/
+  upload:
+    url: http://localhost:8082
+    maxSize: 5
+
+# 定时任务
+message:
+  job:
+    switch: 1
+    time: 0 0/1 * * * ?
+couponExpire:
+  job:
+    switch: 1
+    time: 0 0/1 * * * ?
+orderCancel:
+  job:
+    switch: 1
+    time: 0 0/1 * * * ?
+commission:
+  job:
+    switch: 1
+    time: 0 0/1 * * * ?
+
+# 阿里云短信
+aliyun:
+  sms:
+    mode: 1
+    accessKeyId: LTAI5t7GRyjd9hq6zbcgfBC9
+    accessKeySecret: IMBwJaKZOfENlwJd93OczDKoY9taCg
+    signName: 仁信点餐系统
+
+# 微信
+weixin:
+  official:
+    appId: wxf4327ef05c27a0
+    appSecret: 1f55e8749332234d9a074873d8e6a3
+  subMessage:
+    orderCreated: "[{'key':'time', 'name':'订单时间'},{'key':'orderSn', 'name':'订单号'},{'key':'remark', 'name':'备注信息'}]"
+    deliverGoods: "[{'key':'receiver', 'name':'收货人'}, {'key':'orderSn', 'name':'订单号'}, {'key':'expressCompany', 'name':'快递公司'}, {'key':'expressNo', 'name':'快递单号'}]"
+    couponExpire: "[{'key':'name', 'name':'卡券名称'}, {'key':'expireTime', 'name':'到期时间'},{'key':'tips', 'name':'温馨提示'}]"
+    couponArrival: "[{'key':'name', 'name':'卡券名称'},{'key':'amount', 'name':'金额'},{'key':'tips', 'name':'温馨提示'}]"
+    balanceChange: "[{'key':'amount', 'name':'变动金额'},{'key':'time', 'name':'变动时间'},{'key':'tips', 'name':'温馨提示'}]"
+    couponConfirm: "[{'key':'name', 'name':'卡券名称'},{'key':'time', 'name':'核销时间'}]"
+    pointChange: "[{'key':'amount', 'name':'变动数量'},{'key':'time', 'name':'变动时间'},{'key':'remark', 'name':'备注信息'}]"
+
+wxpay:
+  appId: wxab1eb347e36326e5
+  appSecret: a46228459803b3be1bcb52e61a333eff
+  mchId: 1636980848
+  apiV2: fuyuan20201030yanhe9999999999999
+  certPath: /usr/local/fuint/cert/apiclient_cert.p12
+  domain: https://www.fuint.cn/fuint-application
+
+alipay:
+  appId: 应用编号
+  privateKey: 应用私钥
+  publicKey: 支付宝公钥
+  serverUrl: https://openapi.alipay.com/gateway.do
+  domain: https://www.fuint.cn/fuint-application/clientApi/pay/aliPayCallback
+
+dinenova:
+  # 配置文件存储服务类型，可选配置[local,aliyun,minio,rustfs,s3]，默认 s3 协议
+  oss:
+    type: aliyun
+    accessKey: LTAI5tAMhyQ5M4ax36oedKcQ
+    secretKey: DqOLunL4Qt8bWSxhi2mEktfcUKacVG
+    endpoint: oss-cn-beijing.aliyuncs.com
+    bucketName: mymianshioffer
+    folder: uploads
+
+springdoc:
+  api-docs:
+    enabled: true

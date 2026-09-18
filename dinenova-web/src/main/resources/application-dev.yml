@@ -1,0 +1,31 @@
+spring:
+  #配置数据库
+  datasource:
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    url: jdbc:p6spy:mysql://localhost:3306/fuint-food?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=UTC&tinyInt1isBit=false
+    username: root
+    password: 123456
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password:
+      database: 0
+      timeout: 10s
+  #全文搜索引擎配置
+  elasticsearch:
+    uris: http://localhost:9200
+
+dinenova:
+  #配置文件存储服务类型，可选配置[local,aliyun,minio,rustfs]
+  oss:
+    type: aliyun
+    accessKey: LTAI5tAMhyQ5M4ax36oedKcQ
+    secretKey: DqOLunL4Qt8bWSxhi2mEktfcUKacVG
+    endpoint: oss-cn-beijing.aliyuncs.com
+    bucketName: mymianshioffer
+
+# 是否启用api
+springdoc:
+  api-docs:
+    enabled: true

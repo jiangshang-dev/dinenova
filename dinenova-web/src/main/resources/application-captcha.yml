@@ -1,0 +1,13 @@
+# 图形验证码。由 application.yml 的 spring.config.import 引入。
+kaptcha:
+  border: "yes"
+  border-color: "204,204,204"
+  background-clear-from: "245,245,245"
+  background-clear-to: "245,245,245"
+  noise-color: "195,35,97"
+  font-color: "195,35,97"
+  font-size: 40
+  char-length: 4
+  font-names: "宋体,楷体,微软雅黑"
+  image-width: 125
+  image-height: 60

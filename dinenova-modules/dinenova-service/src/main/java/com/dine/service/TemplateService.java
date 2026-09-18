@@ -11,9 +11,6 @@ import java.util.Map;
 
 /**
  * 小程序全局配置业务接口
- *
- * Created by 袁腾飞老师
- * CopyRight https://www.fuint.cn
  */
 public interface TemplateService extends IService<Template> {
 

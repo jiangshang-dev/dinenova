@@ -13,7 +13,6 @@ import com.dine.oss.FileStorageService;
 import com.dine.service.SettingService;
 import com.dine.utils.StringUtil;
 import lombok.AllArgsConstructor;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
@@ -29,11 +28,6 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class SettingServiceImpl extends ServiceImpl<MtSettingMapper, MtSetting> implements SettingService {
-
-    /**
-     * 系统环境变量
-     * */
-    private Environment env;
 
     private MtSettingMapper mtSettingMapper;
 
@@ -139,14 +133,12 @@ public class SettingServiceImpl extends ServiceImpl<MtSettingMapper, MtSetting> 
      * */
     @Override
     public String getUploadBasePath() {
-        String basePath = env.getProperty("images.upload.url");
-        if (fileStorageService.isRemote()) {
-            String domain = fileStorageService.getDomain();
-            if (StringUtil.isNotEmpty(domain)) {
-                basePath = domain;
-            }
-        }
-        return basePath;
+        return fileStorageService.getDomain();
+    }
+
+    @Override
+    public String fileUrl(String path) {
+        return fileStorageService.fileUrl(path);
     }
 
     /**

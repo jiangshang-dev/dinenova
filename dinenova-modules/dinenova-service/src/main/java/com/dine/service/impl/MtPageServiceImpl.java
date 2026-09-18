@@ -35,9 +35,6 @@ import java.util.*;
 
 /**
  * diy首页装修服务接口
- * <p>
- * Created by 袁腾飞老师
- * CopyRight https://www.fuint.cn
  */
 @Service
 @AllArgsConstructor

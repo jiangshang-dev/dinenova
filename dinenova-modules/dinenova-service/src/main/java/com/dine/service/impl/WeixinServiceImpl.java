@@ -3,6 +3,7 @@ package com.dine.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONArray;
+import com.dine.config.WebsiteProperties;
 import com.dine.constant.Constants;
 import com.dine.oss.FileStorageService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +39,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.File;
 import org.springframework.core.env.Environment;
 import weixin.popular.util.JsonUtil;
 import javax.crypto.Cipher;
@@ -94,6 +97,8 @@ public class WeixinServiceImpl implements WeixinService {
     private MerchantService merchantService;
 
     private Environment env;
+
+    private WebsiteProperties websiteProperties;
 
     private WxPayBean wxPayBean;
 
@@ -662,18 +667,14 @@ public class WeixinServiceImpl implements WeixinService {
             byte[] bytes = HttpRESTDataClient.requestPost(url, reqDataJsonStr);
             logger.info("WechatService createStoreQrCode reqData：{}", reqDataJsonStr);
 
-            String pathRoot = env.getProperty("images.root");
-            String baseImage = env.getProperty("images.path");
-
-            String filePath = "Qr" + type + id + ".png";
-            String path = pathRoot + baseImage + filePath;
-            QRCodeUtil.saveQrCodeToLocal(bytes, path);
-
-            // 上传到对象存储
-            if (fileStorageService.isRemote()) {
-                return fileStorageService.upload(new File(path));
-            } else {
-                return baseImage + filePath;
+            File temp = File.createTempFile("wxqr-", ".png");
+            QRCodeUtil.saveQrCodeToLocal(bytes, temp.getAbsolutePath());
+            try {
+                return fileStorageService.upload(temp);
+            } finally {
+                if (!temp.delete()) {
+                    temp.deleteOnExit();
+                }
             }
         } catch (Exception e) {
             logger.error("生成店铺二维码出错啦：{}", e.getMessage());
@@ -716,7 +717,7 @@ public class WeixinServiceImpl implements WeixinService {
             // baseInfo
             Map<String, Object> baseInfo = new HashMap<>();
             if (StringUtil.isNotEmpty(wxCardDto.getLogoUrl())) {
-                baseInfo.put("logo_url", baseImage + wxCardDto.getLogoUrl());
+                baseInfo.put("logo_url", settingService.fileUrl(wxCardDto.getLogoUrl()));
             }
             if (StringUtil.isEmpty(wxCardId)) {
                 baseInfo.put("brand_name", wxCardDto.getBrandName());
@@ -1089,7 +1090,7 @@ public class WeixinServiceImpl implements WeixinService {
             if (!WxPayKit.codeIsOk(result_code)) {
                 throw new RuntimeException(return_msg);
             }
-            result.put("backUrl", env.getProperty("website.url"));
+            result.put("backUrl", websiteProperties.getUrl());
             logger.info("调用微信h5支付接口返回数据：{}", JsonUtil.toJSONString(result));
             return result;
         } catch (Exception e) {
@@ -1117,8 +1118,12 @@ public class WeixinServiceImpl implements WeixinService {
         if (mtStore != null && StringUtil.isNotEmpty(mtStore.getWxApiV2()) && StringUtil.isNotEmpty(mtStore.getWxMchId())) {
             mchId = mtStore.getWxMchId();
             apiV2 = mtStore.getWxApiV2();
-            String basePath = env.getProperty("images.root");
-            certPath = basePath + mtStore.getWxCertPath();
+            String wxCert = mtStore.getWxCertPath();
+            if (wxCert.startsWith("/") || wxCert.matches("^[A-Za-z]:\\\\.*")) {
+                certPath = wxCert;
+            } else {
+                certPath = System.getProperty("user.home") + "/dinenova/upload/" + wxCert;
+            }
             MtMerchant mtMerchant = merchantService.queryMerchantById(mtStore.getMerchantId());
             if (mtMerchant != null && StringUtil.isNotEmpty(mtMerchant.getWxAppId())) {
                 appId = mtMerchant.getWxAppId();

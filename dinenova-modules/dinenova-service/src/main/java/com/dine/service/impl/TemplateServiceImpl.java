@@ -29,9 +29,6 @@ import java.util.*;
 
 /**
  * 小程序全局配置服务接口
- *
- * Created by 袁腾飞老师
- * CopyRight https://www.fuint.cn
  */
 @Service
 @AllArgsConstructor
@@ -116,10 +113,6 @@ public class TemplateServiceImpl extends ServiceImpl<TemplateMapper, Template> i
 
     /**
      * 根据ID删除
-     *
-     * @param id ID
-     * @param operator 袁腾飞老师
-     * @return
      */
     @Override
     @Transactional(rollbackFor = Exception.class)

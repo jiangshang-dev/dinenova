@@ -14,9 +14,6 @@ import java.time.LocalDateTime;
 
 /**
  * 模板
- *
- * @Created by 袁腾飞老师
- * CopyRight https://www.fuint.cn
  */
 @Getter
 @Setter

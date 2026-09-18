@@ -6,6 +6,8 @@ server:
 spring:
   application:
     name: dinenova
+  config:
+    import: classpath:application-captcha.yml
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:dev}
   jackson:
@@ -15,44 +17,6 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-  data:
-    redis:
-      database: 0
-      host: 139.198.181.54
-      port: 6379
-      password: Dcp#7ujm
-      timeout: 10s
-      lettuce:
-        pool:
-          max-active: 8
-          max-idle: 8
-          min-idle: 0
-          max-wait: -1ms
-
-mybatis-plus:
-  mapper-locations: classpath*:/mapper/*.xml
-  configuration:
-    map-underscore-to-camel-case: true
-
-logging:
-  level:
-    com.dine: info
-
-# 系统名称
-system:
-  name: 仁信点餐系统
-
-# 前端h5地址
-website:
-  url: https://www.fuint.cn/h5/
-
-# 上传图片
-images:
-  root: ${user.home}/dinenova/upload
-  path: /static/uploadImages/
-  upload:
-    url: http://localhost:8082
-    maxSize: 5
 
 # 定时任务
 message:
@@ -108,16 +72,6 @@ alipay:
   publicKey: 支付宝公钥
   serverUrl: https://openapi.alipay.com/gateway.do
   domain: https://www.fuint.cn/fuint-application/clientApi/pay/aliPayCallback
-
-dinenova:
-  # 配置文件存储服务类型，可选配置[local,aliyun,minio,rustfs,s3]，默认 s3 协议
-  oss:
-    type: aliyun
-    accessKey: LTAI5tAMhyQ5M4ax36oedKcQ
-    secretKey: DqOLunL4Qt8bWSxhi2mEktfcUKacVG
-    endpoint: oss-cn-beijing.aliyuncs.com
-    bucketName: mymianshioffer
-    folder: uploads
 
 springdoc:
   api-docs:

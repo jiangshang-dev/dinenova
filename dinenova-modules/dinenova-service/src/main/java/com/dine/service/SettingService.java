@@ -51,11 +51,14 @@ public interface SettingService extends IService<MtSetting> {
     MtSetting querySettingByName(Integer merchantId, String type, String name) throws BusinessCheckException;
 
     /**
-     * 获取系统上传文件的根路径
-     *
-     * @return 本地配置或阿里云的oss域名
-     * */
+     * 当前存储的访问域名，不含结尾斜杠
+     */
     String getUploadBasePath();
+
+    /**
+     * 拼出可访问地址。已经是 http 地址则原样返回；历史上传到本机的 /static/ 仍走本机端口。
+     */
+    String fileUrl(String path);
 
     /**
      * 获取支付方式列表

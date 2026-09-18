@@ -151,7 +151,7 @@ public class QRCodeUtil {
     /**
      * 合成背景图和二维码，并在二维码上方绘制名称。
      */
-    public static void mergeImages(String bgPath, ByteArrayOutputStream qrCodeOutputStream, String outputFilePath, String shopName, Integer width, Integer qrcodeWidth, String pathRoot, String baseImage) throws IOException {
+    public static void mergeImages(String bgPath, ByteArrayOutputStream qrCodeOutputStream, String outputFilePath, String shopName, Integer width, Integer qrcodeWidth) throws IOException {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(bgPath);
@@ -172,18 +172,7 @@ public class QRCodeUtil {
             g.drawImage(qrCode, posX, qrCodeTopY, qrCodeWidth, qrCodeHeight, null);
 
             if (StrUtil.isNotBlank(shopName)) {
-                Font font = null;
-                try {
-                    File fontFile = new File(pathRoot + baseImage + "qrcode/" + "文泉驿正黑.ttc");
-                    if (fontFile.exists()) {
-                        font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Font.PLAIN, 40f);
-                    }
-                } catch (FontFormatException e) {
-                    logger.error("加载字体错误 {}", e.getMessage());
-                }
-                if (font == null) {
-                    font = new Font("SansSerif", Font.PLAIN, 40);
-                }
+                Font font = new Font("SansSerif", Font.PLAIN, 40);
                 g.setFont(font);
                 g.setColor(Color.BLACK);
                 FontMetrics fm = g.getFontMetrics();
@@ -209,7 +198,7 @@ public class QRCodeUtil {
         }
     }
 
-    public static void createCode(String qrCode, Integer width, String name, String bgName, String outputFile, String pathRoot, String baseImage) {
+    public static void createCode(String qrCode, Integer width, String name, String bgName, String outputFile) {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             int qrcodeWidth = 250;
@@ -218,7 +207,7 @@ public class QRCodeUtil {
             config.setForeColor(Color.black.getRGB());
             config.setBackColor(Color.white.getRGB());
             QrCodeUtil.generate(qrCode, config, "png", out);
-            QRCodeUtil.mergeImages(bgName, out, outputFile, name, width, qrcodeWidth, pathRoot, baseImage);
+            QRCodeUtil.mergeImages(bgName, out, outputFile, name, width, qrcodeWidth);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }

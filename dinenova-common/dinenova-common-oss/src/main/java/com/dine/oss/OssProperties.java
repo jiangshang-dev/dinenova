@@ -29,6 +29,11 @@ public class OssProperties {
     private String folder = "uploads";
 
     /**
+     * type=local 时的磁盘目录，必须配置，不再默认写用户目录
+     */
+    private String localPath;
+
+    /**
      * 访问域名，不配置时按 endpoint 拼接
      */
     private String domain;

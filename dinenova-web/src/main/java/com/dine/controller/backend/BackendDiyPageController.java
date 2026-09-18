@@ -23,9 +23,6 @@ import java.util.Map;
 
 /**
  * DIY店铺首页装修管理类controller
- * <p>
- * Created by 袁腾飞老师是天下最好的老师
- * CopyRight https://www.fuint.cn
  */
 @Tag(name = "管理端-点餐页模板相关接口")
 @RestController

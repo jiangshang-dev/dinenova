@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 后台登录拦截
@@ -24,9 +25,7 @@ public class AdminUserInterceptor implements AsyncHandlerInterceptor {
 
         // 验证Token
         if (StringUtils.isEmpty(accessToken)) {
-            response.setHeader("Content-Type", "application/json;charset=UTF-8");
-            response.getOutputStream().print("{\"code\":1001,\"message\":\"" + PropertiesUtil
-                    .getResponseErrorMessageByCode(Constants.HTTP_RESPONSE_CODE_NOLOGIN) + "\",\"data\":null}");
+            writeNoLogin(response);
             return false;
         }
 
@@ -37,9 +36,15 @@ public class AdminUserInterceptor implements AsyncHandlerInterceptor {
             return true;
         }
 
-        response.setHeader("Content-Type", "application/json;charset=UTF-8");
-        response.getOutputStream().print("{\"code\":1001,\"message\":\"" + PropertiesUtil
-                .getResponseErrorMessageByCode(Constants.HTTP_RESPONSE_CODE_NOLOGIN) + "\",\"data\":null}");
+        writeNoLogin(response);
         return false;
+    }
+
+    private void writeNoLogin(HttpServletResponse response) throws Exception {
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
+        String message = PropertiesUtil.getResponseErrorMessageByCode(Constants.HTTP_RESPONSE_CODE_NOLOGIN);
+        String body = "{\"code\":1001,\"message\":\"" + message + "\",\"data\":null}";
+        response.getOutputStream().write(body.getBytes(StandardCharsets.UTF_8));
     }
 }

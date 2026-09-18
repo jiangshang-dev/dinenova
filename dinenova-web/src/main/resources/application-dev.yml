@@ -12,6 +12,12 @@ spring:
       password:
       database: 0
       timeout: 10s
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
   #全文搜索引擎配置
   elasticsearch:
     uris: http://localhost:9200
@@ -24,6 +30,26 @@ dinenova:
     secretKey: DqOLunL4Qt8bWSxhi2mEktfcUKacVG
     endpoint: oss-cn-beijing.aliyuncs.com
     bucketName: mymianshioffer
+    folder: uploads
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+logging:
+  level:
+    com.dine: info
+
+# 系统名称
+system:
+  name: 仁信点餐系统
+
+
+# 前端h5地址
+website:
+  url: https://www.fuint.cn/h5/
 
 # 是否启用api
 springdoc:

@@ -14,9 +14,6 @@ import lombok.Setter;
 
 /**
  * diy首页装修实体
- * 
- * @Created by 袁腾飞老师
- * CopyRight https://www.fuint.cn
  */
 @Getter
 @Setter

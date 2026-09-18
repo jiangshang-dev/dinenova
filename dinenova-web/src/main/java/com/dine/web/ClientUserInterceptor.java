@@ -12,6 +12,7 @@ import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 会员端登录拦截器
@@ -39,9 +40,7 @@ public class ClientUserInterceptor implements AsyncHandlerInterceptor {
         String requestURI = request.getRequestURI();
         if (StringUtils.isEmpty(accessToken)) {
             if (requestURI.indexOf("/system/config") < 0) {
-                response.setHeader("Content-Type", "application/json;charset=UTF-8");
-                response.getOutputStream().print("{\"code\":1001,\"message\":\"" + PropertiesUtil
-                        .getResponseErrorMessageByCode(Constants.HTTP_RESPONSE_CODE_NOLOGIN) + "\",\"data\":null}");
+                writeNoLogin(response);
                 return false;
             } else {
                 return true;
@@ -66,9 +65,15 @@ public class ClientUserInterceptor implements AsyncHandlerInterceptor {
         }
 
         logger.info("根据token未查到用户信息,token={}, url={}", accessToken, request.getRequestURI());
-        response.setHeader("Content-Type", "application/json;charset=UTF-8");
-        response.getOutputStream().print("{\"code\":1001,\"message\":\"" + PropertiesUtil
-                .getResponseErrorMessageByCode(Constants.HTTP_RESPONSE_CODE_NOLOGIN) + "\",\"data\":null}");
+        writeNoLogin(response);
         return false;
+    }
+
+    private void writeNoLogin(HttpServletResponse response) throws Exception {
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
+        String message = PropertiesUtil.getResponseErrorMessageByCode(Constants.HTTP_RESPONSE_CODE_NOLOGIN);
+        String body = "{\"code\":1001,\"message\":\"" + message + "\",\"data\":null}";
+        response.getOutputStream().write(body.getBytes(StandardCharsets.UTF_8));
     }
 }

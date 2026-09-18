@@ -1,17 +1,18 @@
 package com.dine.config;
 
+import com.dine.oss.OssProperties;
 import com.dine.web.AdminUserInterceptor;
 import com.dine.web.CommandInterceptor;
 import com.dine.web.ClientUserInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.http.CacheControl;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.resource.CssLinkResourceTransformer;
 import org.springframework.web.servlet.resource.VersionResourceResolver;
+
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -24,17 +25,21 @@ import java.util.concurrent.TimeUnit;
 public class WebConfig extends WebMvcConfigurationSupport {
 
     @Autowired
-    private Environment env;
+    private OssProperties ossProperties;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String root = env.getProperty("images.root");
-        if (root != null && !root.isEmpty()) {
+        if (ossProperties.isLocal() && ossProperties.getLocalPath() != null && !ossProperties.getLocalPath().isEmpty()) {
+            String root = ossProperties.getLocalPath();
             if (!root.endsWith("/")) {
                 root = root + "/";
             }
-            registry.addResourceHandler("/static/uploadImages/**")
-                    .addResourceLocations("file:" + root + "static/uploadImages/");
+            String folder = ossProperties.getFolder() == null ? "uploads" : ossProperties.getFolder();
+            if (folder.startsWith("/")) {
+                folder = folder.substring(1);
+            }
+            registry.addResourceHandler("/" + folder + "/**")
+                    .addResourceLocations("file:" + root + folder + "/");
         }
         registry.addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/", "classpath:/other-resources/")
@@ -85,6 +90,8 @@ public class WebConfig extends WebMvcConfigurationSupport {
         // 客户端拦截
         registry.addInterceptor(portalUserInterceptor())
                 .addPathPatterns("/clientApi/**")
+                .excludePathPatterns("/clientApi/template/**")
+                .excludePathPatterns("/clientApi/diy/index")
                 .excludePathPatterns("/clientApi/sign/**")
                 .excludePathPatterns("/clientApi/page/home")
                 .excludePathPatterns("/clientApi/captcha/**")

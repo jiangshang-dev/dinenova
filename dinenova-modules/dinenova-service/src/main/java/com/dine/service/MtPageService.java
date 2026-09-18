@@ -12,9 +12,6 @@ import java.util.Map;
 
 /**
  * diy首页装修业务接口
- *
- * Created by 袁腾飞老师
- * CopyRight https://www.fuint.cn
  */
 public interface MtPageService extends IService<MtPage> {
 

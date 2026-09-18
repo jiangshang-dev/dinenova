@@ -9,6 +9,7 @@ import com.dine.dto.ReqCouponGroupDto;
 import com.dine.dto.ReqSendLogDto;
 import com.dine.enums.StatusEnum;
 import com.dine.enums.UserCouponStatusEnum;
+import com.dine.oss.FileStorageService;
 import com.dine.service.*;
 import com.dine.util.CommonUtil;
 import com.dine.util.DateUtil;
@@ -91,6 +92,8 @@ public class CouponGroupServiceImpl extends ServiceImpl<MtCouponGroupMapper, MtC
      * 系统环境变量
      * */
     private Environment env;
+
+    private FileStorageService fileStorageService;
 
     /**
      * 分页查询卡券分组列表
@@ -510,29 +513,7 @@ public class CouponGroupServiceImpl extends ServiceImpl<MtCouponGroupMapper, MtC
      * @param request
      * */
     public String saveExcelFile(MultipartFile file, HttpServletRequest request) throws Exception {
-        String fileName = file.getOriginalFilename();
-
-        String imageName = fileName.substring(fileName.lastIndexOf("."));
-        String pathRoot = env.getProperty("images.root");
-        if (pathRoot == null || StringUtil.isEmpty(pathRoot)) {
-            pathRoot = ResourceUtils.getURL("classpath:").getPath();
-        }
-        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-
-        String filePath = "/static/uploadFiles/"+ DateUtil.formatDate(new Date(), "yyyyMMdd")+"/";
-        String path = filePath + uuid + imageName;
-
-        try {
-            File tempFile = new File(pathRoot + path);
-            if (!tempFile.getParentFile().exists()) {
-                tempFile.getParentFile().mkdirs();
-            }
-            CommonUtil.saveMultipartFile(file, pathRoot + path);
-        } catch (Exception e) {
-            //empty
-        }
-
-        return path;
+        return fileStorageService.upload(file);
     }
 
     /**

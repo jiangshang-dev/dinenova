@@ -66,6 +66,8 @@ public class SecurityConfig {
                                 "/clientApi/message/getOne",
                                 "/clientApi/message/wxPush",
                                 "/clientApi/sms/sendVerifyCode",
+                                "/clientApi/diy/**",
+                                "/clientApi/template/**",
                                 "/**/system/config"
                         ).permitAll()
                         .requestMatchers(

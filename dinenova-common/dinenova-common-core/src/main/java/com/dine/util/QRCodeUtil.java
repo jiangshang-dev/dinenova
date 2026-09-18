@@ -1,5 +1,8 @@
 package com.dine.util;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.qrcode.QrCodeUtil;
+import cn.hutool.extra.qrcode.QrConfig;
 import org.apache.commons.lang.StringUtils;
 import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
@@ -143,5 +146,81 @@ public class QRCodeUtil {
             }
         }
         return bufferedImage;
+    }
+
+    /**
+     * 合成背景图和二维码，并在二维码上方绘制名称。
+     */
+    public static void mergeImages(String bgPath, ByteArrayOutputStream qrCodeOutputStream, String outputFilePath, String shopName, Integer width, Integer qrcodeWidth, String pathRoot, String baseImage) throws IOException {
+        InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(bgPath);
+            BufferedImage background = ImageIO.read(inputStream);
+            ByteArrayInputStream qrCodeInputStream = new ByteArrayInputStream(qrCodeOutputStream.toByteArray());
+            BufferedImage qrCode = ImageIO.read(qrCodeInputStream);
+
+            int qrCodeWidth = qrcodeWidth;
+            int qrCodeHeight = qrcodeWidth;
+            int backgroundWidth = width;
+            int backgroundHeight = width;
+            int posX = (backgroundWidth - qrCodeWidth) / 2;
+            int qrCodeTopY = (backgroundHeight - qrCodeHeight) / 2;
+
+            BufferedImage combined = new BufferedImage(backgroundWidth, backgroundHeight, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g = combined.createGraphics();
+            g.drawImage(background, 0, 0, backgroundWidth, backgroundHeight, null);
+            g.drawImage(qrCode, posX, qrCodeTopY, qrCodeWidth, qrCodeHeight, null);
+
+            if (StrUtil.isNotBlank(shopName)) {
+                Font font = null;
+                try {
+                    File fontFile = new File(pathRoot + baseImage + "qrcode/" + "文泉驿正黑.ttc");
+                    if (fontFile.exists()) {
+                        font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Font.PLAIN, 40f);
+                    }
+                } catch (FontFormatException e) {
+                    logger.error("加载字体错误 {}", e.getMessage());
+                }
+                if (font == null) {
+                    font = new Font("SansSerif", Font.PLAIN, 40);
+                }
+                g.setFont(font);
+                g.setColor(Color.BLACK);
+                FontMetrics fm = g.getFontMetrics();
+                int textWidth = fm.stringWidth(shopName);
+                int centerX = backgroundWidth / 2;
+                int textX = centerX - textWidth / 2;
+                int textY = qrCodeTopY - 20;
+                g.drawString(shopName, textX, textY);
+            }
+
+            File output = new File(outputFilePath);
+            File parent = output.getParentFile();
+            if (parent != null && !parent.exists()) {
+                parent.mkdirs();
+            }
+            ImageIO.write(combined, "PNG", output);
+            g.dispose();
+            qrCodeInputStream.close();
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        }
+    }
+
+    public static void createCode(String qrCode, Integer width, String name, String bgName, String outputFile, String pathRoot, String baseImage) {
+        try {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            int qrcodeWidth = 250;
+            QrConfig config = new QrConfig(qrcodeWidth, qrcodeWidth);
+            config.setMargin(1);
+            config.setForeColor(Color.black.getRGB());
+            config.setBackColor(Color.white.getRGB());
+            QrCodeUtil.generate(qrCode, config, "png", out);
+            QRCodeUtil.mergeImages(bgName, out, outputFile, name, width, qrcodeWidth, pathRoot, baseImage);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
     }
 }

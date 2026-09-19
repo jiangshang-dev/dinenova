@@ -40,7 +40,6 @@ public class ClientCaptchaController extends BaseController {
     @Operation(summary = "获取图形验证码")
     @Debounce
     @RequestMapping(value = "/getCode", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject getCode(HttpServletResponse response) {
         String captcha = "";
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
@@ -70,7 +69,6 @@ public class ClientCaptchaController extends BaseController {
     @Operation(summary = "校验图形验证码")
     @Debounce
     @RequestMapping(value = "/checkCode", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject checkCode(@RequestParam String code, HttpServletRequest request) {
         String uuid = request.getParameter("uuid") == null ? "" : request.getParameter("uuid");
 

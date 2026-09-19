@@ -175,13 +175,14 @@ public class MtPageServiceImpl extends ServiceImpl<MtPageMapper, MtPage> impleme
         queryWrapper.eq(MtPage::getStoreId, storeId); // 查当前店铺的
         queryWrapper.eq(MtPage::getStatus, type); // 默认正在使用的
         List<MtPage> pageList = pageMapper.selectList(queryWrapper);
-        if (pageList != null && !pageList.isEmpty()) {
+        if (pageList != null && !pageList.isEmpty() && StringUtils.isNotBlank(pageList.get(0).getPageData())) {
             MtPage page = pageList.get(0);
+            JSONObject pageDataJson = JSON.parseObject(page.getPageData());
+            JSONArray items = pageDataJson == null ? null : pageDataJson.getJSONArray("items");
             BeanUtils.copyProperties(page, dto);
-
-            dto.setPageDataJson(JSON.parseObject(page.getPageData()));
-            dto.setItems((JSONArray) JSON.parseObject(page.getPageData()).get("items"));
-            dto.setPage((JSONObject) JSON.parseObject(page.getPageData()).get("page"));
+            dto.setPageDataJson(pageDataJson == null ? getDefaultPage() : pageDataJson);
+            dto.setItems(items == null ? new JSONArray() : items);
+            dto.setPage(pageDataJson == null ? getDefaultPage().getJSONObject("page") : pageDataJson.getJSONObject("page"));
             dto.setPageData("");
         } else {
             getPageNoUse(storeId, dto);
@@ -191,26 +192,11 @@ public class MtPageServiceImpl extends ServiceImpl<MtPageMapper, MtPage> impleme
     }
 
     private void getPageNoUse(Integer storeId, PageDto dto) {
-        LambdaQueryWrapper<MtPage> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(MtPage::getStoreId, storeId); // 查当前店铺的
-        List<MtPage> pages = pageMapper.selectList(wrapper);
-        if (pages != null && !pages.isEmpty()) {
-            MtPage page = pages.get(0);
-            BeanUtils.copyProperties(page, dto);
-
-            JSONObject defaultPage = getDefaultPage();
-            dto.setPageDataJson(defaultPage);
-            dto.setItems(new JSONArray());
-            dto.setPage((JSONObject) JSON.parseObject(page.getPageData()).get("page"));
-            dto.setPageData("");
-        } else {
-            MtPage page = new MtPage();
-            JSONObject defaultPage = getDefaultPage();
-            dto.setPageDataJson(defaultPage);
-            dto.setItems(new JSONArray());
-            dto.setPage((JSONObject) JSON.parseObject(page.getPageData()));
-            dto.setPageData("");
-        }
+        JSONObject defaultPage = getDefaultPage();
+        dto.setPageDataJson(defaultPage);
+        dto.setItems(new JSONArray());
+        dto.setPage(defaultPage.getJSONObject("page"));
+        dto.setPageData("");
     }
 
     public static JSONObject getDefaultPage(){
@@ -242,6 +228,7 @@ public class MtPageServiceImpl extends ServiceImpl<MtPageMapper, MtPage> impleme
         //pageData
         pageData.put("page", page);
         pageData.put("items", new JSONArray());
+        pageData.put("bgcolor", "#f2f2f2");
         return pageData;
     }
 

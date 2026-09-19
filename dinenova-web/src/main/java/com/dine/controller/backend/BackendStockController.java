@@ -72,7 +72,6 @@ public class BackendStockController extends BaseController {
     @Operation(summary = "获取库存管理记录列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('stock:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -145,7 +144,6 @@ public class BackendStockController extends BaseController {
     @Operation(summary = "删除库存管理记录状态")
     @Debounce
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('stock:index')")
     public ResponseObject delete(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -176,7 +174,6 @@ public class BackendStockController extends BaseController {
     @Operation(summary = "保存库存管理记录")
     @Debounce
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('stock:index')")
     public ResponseObject save(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -217,7 +214,6 @@ public class BackendStockController extends BaseController {
     @Operation(summary = "获取库存管理记录详情")
     @Debounce
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('stock:index')")
     public ResponseObject info(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

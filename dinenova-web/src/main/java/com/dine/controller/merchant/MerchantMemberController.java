@@ -64,7 +64,6 @@ public class MerchantMemberController extends BaseController {
     @Operation(summary = "查询会员列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request, @RequestBody MemberListParam memberListParam) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String mobile = memberListParam.getMobile();
@@ -175,7 +174,6 @@ public class MerchantMemberController extends BaseController {
     @Operation(summary = "查询会员详情")
     @Debounce
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject info(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         AccountInfo accountInfo = TokenUtil.getAccountInfoByToken(token);

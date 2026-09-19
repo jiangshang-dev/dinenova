@@ -46,7 +46,6 @@ public class ClientCashierController extends BaseController {
     @Operation(summary = "查询会员信息")
     @Debounce
     @RequestMapping(value = "/memberInfo", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject memberInfo(HttpServletRequest request,  @RequestBody MemberInfoParam memberInfoParam) throws BusinessCheckException {
         String merchantNo = request.getHeader("merchantNo") == null ? "" : request.getHeader("merchantNo");
         Integer merchantId = merchantService.getMerchantId(merchantNo);

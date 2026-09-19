@@ -82,7 +82,6 @@ public class BackendMemberController extends BaseController {
     @Operation(summary = "查询会员列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('member:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -198,7 +197,6 @@ public class BackendMemberController extends BaseController {
     @Operation(summary = "更新会员状态")
     @Debounce
     @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('member:index')")
     public ResponseObject updateStatus(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -230,7 +228,6 @@ public class BackendMemberController extends BaseController {
     @Operation(summary = "删除会员")
     @Debounce
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('member:index')")
     public ResponseObject delete(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -254,7 +251,6 @@ public class BackendMemberController extends BaseController {
     @Operation(summary = "保存会员信息")
     @Debounce
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('member:add')")
     public ResponseObject save(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException, ParseException {
         String token = request.getHeader("Access-Token");
@@ -335,7 +331,6 @@ public class BackendMemberController extends BaseController {
     @Operation(summary = "获取会员详情")
     @Debounce
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('member:index')")
     public ResponseObject info(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -388,7 +383,6 @@ public class BackendMemberController extends BaseController {
     @Operation(summary = "获取会员设置")
     @Debounce
     @RequestMapping(value = "/setting", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('member:setting')")
     public ResponseObject setting(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -441,7 +435,6 @@ public class BackendMemberController extends BaseController {
     @Operation(summary = "保存会员设置")
     @Debounce
     @RequestMapping(value = "/saveSetting", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('member:setting')")
     public ResponseObject saveSetting(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -513,7 +506,6 @@ public class BackendMemberController extends BaseController {
     @Operation(summary = "重置会员密码")
     @Debounce
     @RequestMapping(value = "/resetPwd", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('member:add')")
     public ResponseObject resetPwd(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -555,7 +547,6 @@ public class BackendMemberController extends BaseController {
     @Operation(summary = "获取会员分组")
     @Debounce
     @RequestMapping(value = "/groupList", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('member:group:index')")
     public ResponseObject groupList(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -591,7 +582,6 @@ public class BackendMemberController extends BaseController {
     @Operation(summary = "查找会员列表")
     @Debounce
     @RequestMapping(value = "/searchMembers", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject searchMembers(HttpServletRequest request) {
         String token = request.getHeader("Access-Token");
         String groupIds = request.getParameter("groupIds") != null ? request.getParameter("groupIds") : "";

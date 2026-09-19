@@ -60,7 +60,6 @@ public class BackendMerchantController extends BaseController {
     @Operation(summary = "分页查询商户列表")
     @Debounce
     @RequestMapping(value = "/list")
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('merchant:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -123,7 +122,6 @@ public class BackendMerchantController extends BaseController {
     @Operation(summary = "查询商户列表")
     @Debounce
     @RequestMapping(value = "/searchMerchant",  method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject searchMerchant(HttpServletRequest request) throws BusinessCheckException {
         String merchantId = request.getParameter("id") == null ? "" : request.getParameter("id");
         String name = request.getParameter("name") == null ? "" : request.getParameter("name");
@@ -153,7 +151,6 @@ public class BackendMerchantController extends BaseController {
     @Operation(summary = "更新商户状态")
     @Debounce
     @RequestMapping(value = "/updateStatus")
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('merchant:index')")
     public ResponseObject updateStatus(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -183,7 +180,6 @@ public class BackendMerchantController extends BaseController {
     @Operation(summary = "保存商户信息")
     @Debounce
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('merchant:index')")
     public ResponseObject saveHandler(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -258,7 +254,6 @@ public class BackendMerchantController extends BaseController {
     @Operation(summary = "获取商户详情")
     @Debounce
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('merchant:index')")
     public ResponseObject getMerchantInfo(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

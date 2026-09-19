@@ -62,7 +62,6 @@ public class BackendSendLogController extends BaseController {
     @Operation(summary = "查询发券记录列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String status = request.getParameter("status") == null ? "" : request.getParameter("status");
@@ -130,7 +129,6 @@ public class BackendSendLogController extends BaseController {
     @Operation(summary = "废除用户卡券")
     @Debounce
     @RequestMapping(value = "/removeUserCoupon/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject removeUserCoupon(HttpServletRequest request, @PathVariable("id") Long id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         AccountInfo accountInfo = TokenUtil.getAccountInfoByToken(token);

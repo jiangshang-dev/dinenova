@@ -71,7 +71,6 @@ public class BackendPointController extends BaseController {
     @Operation(summary = "积分明细列表查询")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('point:list')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -133,7 +132,6 @@ public class BackendPointController extends BaseController {
     @Operation(summary = "积分设置详情")
     @Debounce
     @RequestMapping(value = "/setting", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('point:setting')")
     public ResponseObject setting(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -181,7 +179,6 @@ public class BackendPointController extends BaseController {
     @Operation(summary = "提交积分设置")
     @Debounce
     @RequestMapping(value = "/saveSetting", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('point:setting')")
     public ResponseObject saveSetting(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -243,7 +240,6 @@ public class BackendPointController extends BaseController {
     @Operation(summary = "提交积分充值")
     @Debounce
     @RequestMapping(value = "/doRecharge", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('point:modify')")
     public ResponseObject doRecharge(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

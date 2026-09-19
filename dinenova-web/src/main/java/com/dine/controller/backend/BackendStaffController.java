@@ -56,7 +56,6 @@ public class BackendStaffController extends BaseController {
     @Operation(summary = "获取员工列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('staff:list')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -126,7 +125,6 @@ public class BackendStaffController extends BaseController {
     @Operation(summary = "更新员工状态")
     @Debounce
     @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('staff:list')")
     public ResponseObject updateStatus(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -151,7 +149,6 @@ public class BackendStaffController extends BaseController {
     @Operation(summary = "保存员工信息")
     @Debounce
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('staff:list')")
     public ResponseObject saveHandler(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -211,7 +208,6 @@ public class BackendStaffController extends BaseController {
     @Operation(summary = "查询员工详情")
     @Debounce
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('staff:list')")
     public ResponseObject getStaffInfo(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -244,7 +240,6 @@ public class BackendStaffController extends BaseController {
     @Operation(summary = "店铺员工列表")
     @Debounce
     @RequestMapping(value = "/storeStaffList/{storeId}", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject storeStaffList(HttpServletRequest request, @PathVariable("storeId") Integer storeId) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
 
@@ -279,7 +274,6 @@ public class BackendStaffController extends BaseController {
     @Operation(summary = "删除员工")
     @Debounce
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('staff:list')")
     public ResponseObject deleteStaff(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

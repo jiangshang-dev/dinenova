@@ -21,6 +21,10 @@ public class AdminUserInterceptor implements AsyncHandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            return true;
+        }
+
         String accessToken = request.getHeader("Access-Token");
 
         // 验证Token

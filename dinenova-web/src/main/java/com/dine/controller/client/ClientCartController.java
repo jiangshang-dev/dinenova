@@ -81,7 +81,6 @@ public class ClientCartController extends BaseController {
     @Operation(summary = "保存购物车")
     @Debounce
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject save(HttpServletRequest request, @RequestBody CartSaveParam saveParam) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String merchantNo = request.getHeader("merchantNo") == null ? "" : request.getHeader("merchantNo");
@@ -172,7 +171,6 @@ public class ClientCartController extends BaseController {
     @Operation(summary = "删除/清空购物车")
     @Debounce
     @RequestMapping(value = "/clear", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject clear(HttpServletRequest request, @RequestBody CartClearParam clearParam) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String cartIds = clearParam.getCartId() == null ? "" : String.join(",", clearParam.getCartId());
@@ -210,7 +208,6 @@ public class ClientCartController extends BaseController {
     @Operation(summary = "获取购物车列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request, @RequestBody CartListParam params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String merchantNo = request.getHeader("merchantNo") == null ? "" : request.getHeader("merchantNo");

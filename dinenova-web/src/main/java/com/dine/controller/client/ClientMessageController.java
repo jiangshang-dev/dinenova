@@ -57,7 +57,6 @@ public class ClientMessageController extends BaseController {
     @Operation(summary = "查询最新一条未读消息")
     @Debounce
     @RequestMapping(value = "/getOne", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject getOne(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
 
@@ -89,7 +88,6 @@ public class ClientMessageController extends BaseController {
     @Operation(summary = "将消息置为已读")
     @Debounce
     @RequestMapping(value = "/readed", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject readed(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         UserInfo mtUser = TokenUtil.getUserInfoByToken(token);
@@ -112,7 +110,6 @@ public class ClientMessageController extends BaseController {
     @Operation(summary = "微信推送消息")
     @Debounce
     @RequestMapping(value = "/wxPush", method = RequestMethod.GET)
-    @CrossOrigin
     public String wxPush(HttpServletRequest request) {
         String echostr =  request.getParameter("echostr") == null ? "" : request.getParameter("echostr");
 
@@ -129,7 +126,6 @@ public class ClientMessageController extends BaseController {
     @Operation(summary = "微信订阅消息模板")
     @Debounce
     @RequestMapping(value = "/getSubTemplate", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject getSubTemplate(HttpServletRequest request) throws BusinessCheckException {
         String merchantNo = request.getHeader("merchantNo");
         String keys =  request.getParameter("keys") == null ? "" :request.getParameter("keys");

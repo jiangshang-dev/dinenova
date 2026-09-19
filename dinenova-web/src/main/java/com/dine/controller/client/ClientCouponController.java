@@ -74,7 +74,6 @@ public class ClientCouponController extends BaseController {
     @Operation(summary = "获取卡券列表数据")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request, @RequestBody CouponListParam params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String merchantNo = request.getHeader("merchantNo") == null ? "" : request.getHeader("merchantNo");
@@ -99,7 +98,6 @@ public class ClientCouponController extends BaseController {
     @Operation(summary = "领取卡券")
     @Debounce
     @RequestMapping(value = "/receive", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject receive(HttpServletRequest request, @RequestBody CouponReceiveParam couponReceiveParam) {
         String token = request.getHeader("Access-Token");
         UserInfo mtUser = TokenUtil.getUserInfoByToken(token);
@@ -131,7 +129,6 @@ public class ClientCouponController extends BaseController {
     @Operation(summary = "查询卡券详情")
     @Debounce
     @RequestMapping(value = "/detail", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject detail(HttpServletRequest request, @RequestBody CouponInfoParam params) throws BusinessCheckException, InvocationTargetException, IllegalAccessException {
         String token = request.getHeader("Access-Token");
         UserInfo mtUser = TokenUtil.getUserInfoByToken(token);

@@ -48,7 +48,6 @@ public class ClientStoreController extends BaseController {
     @Operation(summary = "获取店铺列表（根据距离排序）")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String keyword = param.get("keyword") == null ? "" : param.get("keyword").toString();
         String latitude = request.getHeader("latitude") == null ? "" : request.getHeader("latitude");
@@ -71,7 +70,6 @@ public class ClientStoreController extends BaseController {
     @Operation(summary = "获取店铺详情")
     @Debounce
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject detail(HttpServletRequest request) throws BusinessCheckException {
         Integer storeId = request.getHeader("storeId") == null ? 0 : Integer.parseInt(request.getHeader("storeId"));
         Integer tableId = request.getHeader("tableId") == null ? 0 : Integer.parseInt(request.getHeader("tableId"));

@@ -64,7 +64,6 @@ public class BackendArticleController extends BaseController {
     @Operation(summary = "文章列表查询")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('content:article:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -132,7 +131,6 @@ public class BackendArticleController extends BaseController {
     @Operation(summary = "更新文章状态")
     @Debounce
     @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('content:article:edit')")
     public ResponseObject updateStatus(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -169,7 +167,6 @@ public class BackendArticleController extends BaseController {
     @Operation(summary = "保存文章")
     @Debounce
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('content:article:add')")
     public ResponseObject saveHandler(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -226,7 +223,6 @@ public class BackendArticleController extends BaseController {
     @Operation(summary = "获取文章详情")
     @Debounce
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('content:article:index')")
     public ResponseObject info(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

@@ -97,7 +97,6 @@ public class BackendCashierController extends BaseController {
     @Operation(summary = "收银台初始化")
     @Debounce
     @RequestMapping(value = "/init/{userId}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('cashier:index')")
     public ResponseObject init(HttpServletRequest request, @PathVariable("userId") Integer userId) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -169,7 +168,6 @@ public class BackendCashierController extends BaseController {
     @Operation(summary = "查询商品列表")
     @Debounce
     @RequestMapping(value = "/searchGoods", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('cashier:index')")
     public ResponseObject searchGoods(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -207,7 +205,6 @@ public class BackendCashierController extends BaseController {
     @Operation(summary = "获取商品详情")
     @Debounce
     @RequestMapping(value = "/getGoodsInfo/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('cashier:index')")
     public ResponseObject getGoodsInfo(HttpServletRequest request, @PathVariable("id") Integer goodsId) throws InvocationTargetException, IllegalAccessException {
         String token = request.getHeader("Access-Token");
@@ -286,7 +283,6 @@ public class BackendCashierController extends BaseController {
     @Operation(summary = "搜索会员信息")
     @Debounce
     @RequestMapping(value = "/getMemberInfo", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('cashier:index')")
     public ResponseObject getMemberInfo(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -329,7 +325,6 @@ public class BackendCashierController extends BaseController {
     @Operation(summary = "获取会员信息")
     @Debounce
     @RequestMapping(value = "/getMemberInfoById/{userId}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('cashier:index')")
     public ResponseObject getMemberInfoById(HttpServletRequest request, @PathVariable("userId") String userId) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -355,7 +350,6 @@ public class BackendCashierController extends BaseController {
     @Operation(summary = "执行挂单")
     @Debounce
     @RequestMapping(value = "/doHangUp", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('cashier:index')")
     public ResponseObject doHangUp(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -391,7 +385,6 @@ public class BackendCashierController extends BaseController {
     @Operation(summary = "获取挂单列表")
     @Debounce
     @RequestMapping(value = "/getHangUpList", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('cashier:index')")
     public ResponseObject getHangUpList(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

@@ -64,7 +64,6 @@ public class ClientSmsController extends BaseController {
     @Operation(summary = "发送验证码短信")
     @Debounce
     @RequestMapping(value = "/sendVerifyCode", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject sendVerifyCode(HttpServletRequest request, @RequestBody Map<String, Object> param) throws Exception {
         String mobile = param.get("mobile") == null ? "" : param.get("mobile").toString();
         String captchaCode = param.get("captchaCode") == null ? "" : param.get("captchaCode").toString();

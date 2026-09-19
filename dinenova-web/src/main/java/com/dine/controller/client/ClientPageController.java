@@ -47,7 +47,6 @@ public class ClientPageController extends BaseController {
     @Operation(summary = "获取首页页面数据")
     @Debounce
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject getPageData(HttpServletRequest request, @RequestParam Map<String, Object> param) throws BusinessCheckException {
         String merchantNo = request.getHeader("merchantNo") == null ? "" : request.getHeader("merchantNo");
         Integer storeId = request.getHeader("storeId") == null ? 0 : Integer.parseInt(request.getHeader("storeId"));

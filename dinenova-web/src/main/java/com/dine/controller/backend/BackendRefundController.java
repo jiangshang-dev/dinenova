@@ -71,7 +71,6 @@ public class BackendRefundController extends BaseController {
     @Operation(summary = "退款列表查询")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('refund:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -172,7 +171,6 @@ public class BackendRefundController extends BaseController {
     @Operation(summary = "查询退款详情")
     @Debounce
     @RequestMapping(value = "/info/{refundId}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('refund:index')")
     public ResponseObject info(HttpServletRequest request, @PathVariable("refundId") Integer refundId) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -201,7 +199,6 @@ public class BackendRefundController extends BaseController {
     @Operation(summary = "保存售后订单")
     @Debounce
     @RequestMapping(value = "save", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('refund:edit')")
     public ResponseObject save(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -240,7 +237,6 @@ public class BackendRefundController extends BaseController {
     @Operation(summary = "发起退款")
     @Debounce
     @RequestMapping(value = "doRefund", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('refund:edit')")
     public ResponseObject doRefund(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

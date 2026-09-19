@@ -77,7 +77,6 @@ public class BackendDoConfirmController extends BaseController {
     @Operation(summary = "核销详情")
     @Debounce
     @RequestMapping(value = "/info", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:confirm:index')")
     public ResponseObject info(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -158,7 +157,6 @@ public class BackendDoConfirmController extends BaseController {
     @Operation(summary = "确认核销")
     @Debounce
     @RequestMapping(value = "/doConfirm", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:confirm:index')")
     public ResponseObject doConfirm(HttpServletRequest request, @RequestBody Map<String, Object> param) {
         String token = request.getHeader("Access-Token");

@@ -88,7 +88,6 @@ public class BackendUserCouponController extends BaseController {
     @Operation(summary = "查询会员卡券列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:userCoupon:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -168,7 +167,6 @@ public class BackendUserCouponController extends BaseController {
     @Operation(summary = "核销用户卡券")
     @Debounce
     @RequestMapping(value = "/doConfirm", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:userCoupon:index')")
     public ResponseObject doConfirm(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -205,7 +203,6 @@ public class BackendUserCouponController extends BaseController {
     @Operation(summary = "删除会员卡券")
     @Debounce
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:userCoupon:delete')")
     public ResponseObject delete(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -251,7 +248,6 @@ public class BackendUserCouponController extends BaseController {
     @Operation(summary = "导出会员卡券")
     @Debounce
     @RequestMapping(value = "/exportList", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:userCoupon:index')")
     public void exportList(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String token = request.getParameter("token");

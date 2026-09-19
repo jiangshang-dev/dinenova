@@ -30,11 +30,18 @@ public class Window implements java.io.Serializable{
         item.setDataNum(4);
         // 样式
         JSONObject style = new JSONObject();
-        style.put("background", "#f2f2f2");
+        style.put("background", "#ffffff");
+        style.put("bgcolor", "#ffffff");
         style.put("layout", 4);
         style.put("paddingBottom", 10);
         style.put("paddingLeft", 10);
-        style.put("paddingTop", 0);
+        style.put("paddingTop", 10);
+        style.put("marginTop", 0);
+        style.put("marginBottom", 0);
+        style.put("marginLeft", 0);
+        style.put("topRadio", 8);
+        style.put("bottomRadio", 8);
+        style.put("borderColor", "");
 
         item.setStyle(style);
 

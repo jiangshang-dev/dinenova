@@ -64,7 +64,6 @@ public class MerchantController extends BaseController {
     @Operation(summary = "查询商户信息")
     @Debounce
     @RequestMapping(value = "/info", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject info(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         UserInfo userInfo = TokenUtil.getUserInfoByToken(token);

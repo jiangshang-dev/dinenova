@@ -57,7 +57,6 @@ public class BackendMemberGroupController extends BaseController {
     @Operation(summary = "查询会员分组列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('member:group:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -112,7 +111,6 @@ public class BackendMemberGroupController extends BaseController {
     @Operation(summary = "保存会员分组")
     @Debounce
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('member:group:index')")
     public ResponseObject save(HttpServletRequest request, @RequestBody MemberGroupDto memberGroupDto) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -145,7 +143,6 @@ public class BackendMemberGroupController extends BaseController {
     @Operation(summary = "删除会员分组")
     @Debounce
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('member:group:index')")
     public ResponseObject delete(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -176,7 +173,6 @@ public class BackendMemberGroupController extends BaseController {
     @Operation(summary = "更新分组状态")
     @Debounce
     @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('member:group:index')")
     public ResponseObject updateStatus(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -207,7 +203,6 @@ public class BackendMemberGroupController extends BaseController {
     @Operation(summary = "获取分组详情")
     @Debounce
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('member:group:index')")
     public ResponseObject info(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

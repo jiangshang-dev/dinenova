@@ -11,7 +11,6 @@ import com.dine.utils.StringUtil;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,7 +39,6 @@ public class ClientFileController extends BaseController {
     @Operation(summary = "上传文件")
     @Debounce
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject upload(HttpServletRequest request) {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         String sourcePic = request.getParameter("sourcePic");

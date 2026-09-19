@@ -90,7 +90,6 @@ public class BackendCouponController extends BaseController {
     @Operation(summary = "查询卡券列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:coupon:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -250,7 +249,6 @@ public class BackendCouponController extends BaseController {
     @Operation(summary = "删除卡券")
     @Debounce
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:coupon:index')")
     public ResponseObject delete(HttpServletRequest request, @PathVariable("id") Long id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -277,7 +275,6 @@ public class BackendCouponController extends BaseController {
     @Operation(summary = "保存卡券")
     @Debounce
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:coupon:add')")
     public ResponseObject saveCouponHandler(HttpServletRequest request, @RequestBody ReqCouponDto reqCouponDto) throws BusinessCheckException,ParseException {
         String token = request.getHeader("Access-Token");
@@ -322,7 +319,6 @@ public class BackendCouponController extends BaseController {
     @Operation(summary = "卡券详情")
     @Debounce
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:coupon:index')")
     public ResponseObject info(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -423,7 +419,6 @@ public class BackendCouponController extends BaseController {
     @Operation(summary = "发放卡券")
     @Debounce
     @RequestMapping(value = "/sendCoupon", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:coupon:index')")
     public ResponseObject sendCoupon(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

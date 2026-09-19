@@ -73,7 +73,6 @@ public class BackendConfirmLogController extends BaseController {
     @Operation(summary = "获取会员卡券核销记录列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:confirmLog:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -151,7 +150,6 @@ public class BackendConfirmLogController extends BaseController {
     @Operation(summary = "撤销已使用的卡券")
     @Debounce
     @RequestMapping(value = "/rollbackUserCoupon/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:confirmLog:index')")
     public ResponseObject rollbackUserCoupon(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

@@ -87,9 +87,7 @@ public class BackendCommonController extends BaseController {
     private QrBackgroundService qrBackgroundService;
 
     @Operation(summary = "生成二维码")
-    @Debounce
     @RequestMapping(value = "/createQrCode", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject createQrCode(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String type = params.get("type") != null ? params.get("type").toString() : "";
@@ -138,9 +136,7 @@ public class BackendCommonController extends BaseController {
     }
 
     @Operation(summary = "生成带背景的二维码")
-    @Debounce
     @RequestMapping(value = "/createCode", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject createCode(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String type = params.get("type") != null ? params.get("type").toString() : "";
@@ -249,7 +245,6 @@ public class BackendCommonController extends BaseController {
     @Operation(summary = "上传二维码背景")
     @Debounce
     @RequestMapping(value = "/uploadQrBackground", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject uploadQrBackground(HttpServletRequest request, @RequestParam("file") MultipartFile file,
                                              @RequestParam("type") String type, @RequestParam("id") Integer id) throws BusinessCheckException {
         AccountInfo accountInfo = currentAccount(request);
@@ -317,7 +312,6 @@ public class BackendCommonController extends BaseController {
     @Operation(summary = "删除二维码背景")
     @Debounce
     @RequestMapping(value = "/deleteQrBackground", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject deleteQrBackground(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         AccountInfo accountInfo = currentAccount(request);
         if (accountInfo == null) {
@@ -344,7 +338,6 @@ public class BackendCommonController extends BaseController {
     @Operation(summary = "批量生成桌码")
     @Debounce
     @RequestMapping(value = "/batchCreateTableCode", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject batchCreateTableCode(HttpServletResponse response, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         Integer id = params.get("id") == null ? 0 : Integer.parseInt(params.get("id").toString());
         MtTable mtTable = tableService.queryTableById(id);

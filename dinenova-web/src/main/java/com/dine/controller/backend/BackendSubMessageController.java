@@ -58,7 +58,6 @@ public class BackendSubMessageController extends BaseController {
     @Operation(summary = "订阅消息模板列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('subMessage:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -127,7 +126,6 @@ public class BackendSubMessageController extends BaseController {
     @Operation(summary = "订阅消息模板详情")
     @Debounce
     @RequestMapping(value = "/info/{key}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('subMessage:index')")
     public ResponseObject info(HttpServletRequest request, @PathVariable("key") String key) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -208,7 +206,6 @@ public class BackendSubMessageController extends BaseController {
     @Operation(summary = "保存订阅消息模板")
     @Debounce
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('subMessage:edit')")
     public ResponseObject saveHandler(HttpServletRequest request, @RequestBody Map<String, Object> param) {
         String token = request.getHeader("Access-Token");

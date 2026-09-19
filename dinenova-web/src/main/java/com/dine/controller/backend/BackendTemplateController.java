@@ -48,7 +48,6 @@ public class BackendTemplateController extends BaseController {
      */
     @Operation(summary = "模板列表查询")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('template:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
 
@@ -93,13 +92,12 @@ public class BackendTemplateController extends BaseController {
      */
     @Operation(summary = "保存模板配置")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('template:add')")
     public ResponseObject saveHandler(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
-        // String id = params.get("id") == null ? "" : params.get("id").toString();
-        int storeId = params.get("id") == null ? 0 : Integer.parseInt(params.get("id").toString());
-        // String merchantId = params.get("merchantId") == null ? "0" : params.get("merchantId").toString();
+        Integer rawId = parseInt(params.get("id"));
+        Integer storeId = parseInt(params.get("storeId"));
+        Integer merchantId = parseInt(params.get("merchantId"));
         String color = params.get("color") == null ? "" : params.get("color").toString();
         String templateValue = params.get("templateValue") == null ? "0" : params.get("templateValue").toString();
 
@@ -111,21 +109,35 @@ public class BackendTemplateController extends BaseController {
             return getFailureResult(201, "平台方帐号无法执行该操作，请使用商户帐号操作");
         }
 
-        LambdaQueryWrapper<Template> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Template::getStoreId, storeId);
-        Template template = templateService.getOne(queryWrapper);
+        Template existing = null;
+        if (rawId != null && rawId > 0) {
+            existing = templateService.getById(rawId);
+        }
+        if (existing == null) {
+            Integer sid = (storeId != null && storeId > 0) ? storeId : rawId;
+            if (sid != null && sid > 0) {
+                LambdaQueryWrapper<Template> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(Template::getStoreId, sid);
+                existing = templateService.getOne(queryWrapper);
+            }
+        }
 
-        Template info = new Template();
-        info.setOperator(accountInfo.getAccountName());
-        info.setColor(color);
-        info.setTemplateValue(templateValue);
-        info.setStoreId(storeId);
-        if (template != null) {
-            int id = template.getId();
-            info.setId(id);
-            info.setUpdateTime(LocalDateTime.now());
-            templateService.updateTemplate(info);
+        if (existing != null) {
+            existing.setColor(color);
+            existing.setTemplateValue(templateValue);
+            existing.setOperator(accountInfo.getAccountName());
+            existing.setUpdateTime(LocalDateTime.now());
+            if (existing.getMerchantId() <= 0) {
+                existing.setMerchantId(accountInfo.getMerchantId());
+            }
+            templateService.updateTemplate(existing);
         } else {
+            Template info = new Template();
+            info.setOperator(accountInfo.getAccountName());
+            info.setColor(color);
+            info.setTemplateValue(templateValue);
+            info.setStoreId(storeId != null && storeId > 0 ? storeId : (rawId == null ? 0 : rawId));
+            info.setMerchantId(merchantId != null && merchantId > 0 ? merchantId : accountInfo.getMerchantId());
             info.setCreateTime(LocalDateTime.now());
             info.setUpdateTime(LocalDateTime.now());
             templateService.addTemplate(info);
@@ -141,7 +153,6 @@ public class BackendTemplateController extends BaseController {
      */
     @Operation(summary = "模板配置详情")
     @RequestMapping(value = "/info/{storeId}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('template:info')")
     public ResponseObject info(HttpServletRequest request, @PathVariable("storeId") Integer storeId) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -160,7 +171,6 @@ public class BackendTemplateController extends BaseController {
     @Operation(summary = "删除点餐页模板")
     @Debounce
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject delete(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         AccountInfo accountInfo = TokenUtil.getAccountInfoByToken(token);
@@ -175,7 +185,6 @@ public class BackendTemplateController extends BaseController {
     @Operation(summary = "更新模板状态")
     @Debounce
     @RequestMapping(value = "/updateStatus/{id}/{status}", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject updateStatus(HttpServletRequest request, @PathVariable("id") Integer id, @PathVariable("status") String status) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         AccountInfo accountInfo = TokenUtil.getAccountInfoByToken(token);
@@ -187,6 +196,17 @@ public class BackendTemplateController extends BaseController {
         wrapper.set(Template::getStatus, status);
         templateService.update(wrapper);
         return getSuccessResult("修改状态成功");
+    }
+
+    private Integer parseInt(Object value) {
+        if (value == null || StringUtil.isEmpty(value.toString())) {
+            return null;
+        }
+        try {
+            return Integer.parseInt(value.toString());
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
 }

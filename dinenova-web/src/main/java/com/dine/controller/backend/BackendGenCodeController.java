@@ -50,7 +50,6 @@ public class BackendGenCodeController extends BaseController {
     @Operation(summary = "代码生成列表查询")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('system:genCode:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -92,7 +91,6 @@ public class BackendGenCodeController extends BaseController {
     @Operation(summary = "更新代码状态")
     @Debounce
     @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('system:genCode:add')")
     public ResponseObject updateStatus(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -124,7 +122,6 @@ public class BackendGenCodeController extends BaseController {
     @Operation(summary = "保存代码生成")
     @Debounce
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('system:genCode:add')")
     public ResponseObject saveHandler(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -170,7 +167,6 @@ public class BackendGenCodeController extends BaseController {
     @Operation(summary = "获取代码生成详情")
     @Debounce
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('system:genCode:index')")
     public ResponseObject info(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -196,7 +192,6 @@ public class BackendGenCodeController extends BaseController {
     @Operation(summary = "生成代码")
     @Debounce
     @RequestMapping(value = "/gen/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('system:genCode:gen')")
     public ResponseObject gen(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

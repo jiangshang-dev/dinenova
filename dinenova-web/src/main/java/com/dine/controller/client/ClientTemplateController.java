@@ -27,15 +27,34 @@ public class ClientTemplateController extends BaseController {
 
     @Operation(summary = "提供给小程序端渲染点餐页")
     @RequestMapping(value = "/getWxTemplate/{storeId}", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject getWxTemplate(HttpServletRequest request, @PathVariable("storeId") String storeId) throws BusinessCheckException {
         // LambdaQueryWrapper<MtMerchant> queryWrapper = new LambdaQueryWrapper<>();
         // queryWrapper.eq(merchantId != null, MtMerchant::getNo, merchantId);
         // Integer merchantNo = merchantService.getMerchantId(merchantId);
 
+        Integer sid = parseStoreId(storeId);
+        if (sid == null || sid <= 0) {
+            sid = parseStoreId(request.getHeader("storeId"));
+        }
+        if (sid == null || sid <= 0) {
+            return getSuccessResult(null);
+        }
         LambdaQueryWrapper<Template> templateLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        templateLambdaQueryWrapper.eq(storeId != null, Template::getStoreId, storeId);
+        templateLambdaQueryWrapper.eq(Template::getStoreId, sid);
+        templateLambdaQueryWrapper.orderByDesc(Template::getUpdateTime);
+        templateLambdaQueryWrapper.last("limit 1");
         Template template = templateService.getOne(templateLambdaQueryWrapper);
         return getSuccessResult(template);
+    }
+
+    private Integer parseStoreId(String storeId) {
+        if (storeId == null || storeId.trim().isEmpty()) {
+            return null;
+        }
+        try {
+            return Integer.parseInt(storeId.trim());
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 }

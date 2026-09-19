@@ -88,7 +88,6 @@ public class ClientUserCouponController extends BaseController {
     @Operation(summary = "查询会员卡券详情")
     @Debounce
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject detail(HttpServletRequest request, @RequestParam Map<String, Object> param) throws BusinessCheckException, InvocationTargetException, IllegalAccessException {
         String token = request.getHeader("Access-Token");
         Integer userCouponId = param.get("userCouponId") == null ? 0 : Integer.parseInt(param.get("userCouponId").toString());

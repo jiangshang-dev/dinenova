@@ -61,7 +61,6 @@ public class BackendCommissionRuleController extends BaseController {
     @Operation(summary = "规则列表查询")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('commission:rule:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -132,7 +131,6 @@ public class BackendCommissionRuleController extends BaseController {
     @Operation(summary = "更新分销提成规则状态")
     @Debounce
     @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('commission:rule:index')")
     public ResponseObject updateStatus(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -169,7 +167,6 @@ public class BackendCommissionRuleController extends BaseController {
     @Operation(summary = "保存分销提成规则")
     @Debounce
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('commission:rule:index')")
     public ResponseObject saveHandler(HttpServletRequest request, @RequestBody CommissionRuleParam params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -202,7 +199,6 @@ public class BackendCommissionRuleController extends BaseController {
     @Operation(summary = "获取分销提成规则详情")
     @Debounce
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('commission:rule:index')")
     public ResponseObject info(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

@@ -75,7 +75,6 @@ public class BackendGiveLogController extends BaseController {
     @Operation(summary = "查询转赠列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         Integer page = request.getParameter("page") == null ? Constants.PAGE_NUMBER : Integer.parseInt(request.getParameter("page"));
@@ -126,7 +125,6 @@ public class BackendGiveLogController extends BaseController {
     @Operation(summary = "查询转赠详情")
     @Debounce
     @RequestMapping(value = "/giveItem", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject giveItem(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String giveId = request.getParameter("giveId");

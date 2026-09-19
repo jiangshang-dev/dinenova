@@ -39,7 +39,6 @@ public class ClientRegionController extends BaseController {
     @Operation(summary = "获取地区树状结构")
     @Debounce
     @RequestMapping(value = "/tree", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject tree(HttpServletRequest request) {
         String token = request.getHeader("Access-Token");
         UserInfo userInfo = TokenUtil.getUserInfoByToken(token);

@@ -11,7 +11,6 @@ import com.dine.framework.web.BaseController;
 import com.dine.framework.web.ResponseObject;
 import com.dine.utils.StringUtil;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,7 +38,6 @@ public class BackendFileController extends BaseController {
     @Operation(summary = "后台上传文件")
     @Debounce
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject uploadFileLocal(HttpServletRequest request) {
         String token = request.getHeader("Access-Token");
         String action = request.getParameter("action") == null ? "" : request.getParameter("action");

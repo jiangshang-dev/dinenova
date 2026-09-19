@@ -34,6 +34,9 @@ public class NavBar implements java.io.Serializable{
         style.put("background2", "#fff");
         style.put("bgcolor", "#f2f2f2");
         style.put("bottomRadio", 8);
+        style.put("marginTop", 0);
+        style.put("marginBottom", 0);
+        style.put("marginLeft", 0);
         style.put("paddingBottom", 10);
         style.put("paddingLeft", 10);
         style.put("paddingTop", 10);

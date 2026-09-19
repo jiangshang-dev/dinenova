@@ -88,7 +88,6 @@ public class ClientUserController extends BaseController {
     @Operation(summary = "获取会员信息")
     @Debounce
     @RequestMapping(value = "/info", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject info(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String merchantNo = request.getHeader("merchantNo") == null ? "" : request.getHeader("merchantNo");
@@ -177,7 +176,6 @@ public class ClientUserController extends BaseController {
     @Operation(summary = "获取会员资产数据")
     @Debounce
     @RequestMapping(value = "/asset", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject asset(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         UserInfo mtUser = TokenUtil.getUserInfoByToken(token);
@@ -224,7 +222,6 @@ public class ClientUserController extends BaseController {
     @Operation(summary = "获取会员设置")
     @Debounce
     @RequestMapping(value = "/setting", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject setting(HttpServletRequest request) throws BusinessCheckException {
         String merchantNo = request.getHeader("merchantNo");
         Map<String, Object> outParams = new HashMap<>();
@@ -251,7 +248,6 @@ public class ClientUserController extends BaseController {
     @Operation(summary = "保存会员信息")
     @Debounce
     @RequestMapping(value = "/saveInfo", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject saveInfo(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String merchantNo = request.getHeader("merchantNo") == null ? "" : request.getHeader("merchantNo");
@@ -314,7 +310,6 @@ public class ClientUserController extends BaseController {
     @Operation(summary = "设置会员的默认店铺")
     @Debounce
     @RequestMapping(value = "/defaultStore", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject defaultStore(HttpServletRequest request) throws BusinessCheckException {
         Integer storeId = request.getParameter("storeId") == null ? 0 : Integer.parseInt(request.getParameter("storeId"));
 
@@ -335,7 +330,6 @@ public class ClientUserController extends BaseController {
     @Operation(summary = "获取会员二维码")
     @Debounce
     @RequestMapping(value = "/qrCode", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject qrCode(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         UserInfo loginInfo = TokenUtil.getUserInfoByToken(token);

@@ -10,9 +10,11 @@ import com.dine.framework.pagination.PaginationRequest;
 import com.dine.framework.pagination.PaginationResponse;
 import com.dine.repository.mapper.TemplateMapper;
 import com.dine.repository.mapper.MtMerchantMapper;
+import com.dine.repository.mapper.MtStoreMapper;
 import com.dine.repository.model.Template;
 import com.dine.enums.StatusEnum;
 import com.dine.repository.model.MtMerchant;
+import com.dine.repository.model.MtStore;
 import com.github.pagehelper.PageHelper;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.StringUtils;
@@ -40,6 +42,8 @@ public class TemplateServiceImpl extends ServiceImpl<TemplateMapper, Template> i
 
     private MtMerchantMapper mtMerchantMapper;
 
+    private MtStoreMapper mtStoreMapper;
+
     /**
      * 分页查询数据列表
      *
@@ -59,11 +63,19 @@ public class TemplateServiceImpl extends ServiceImpl<TemplateMapper, Template> i
         // lambdaQueryWrapper.ne(Template::getStatus, StatusEnum.DISABLE.getKey());
         List<Template> dataList = templateMapper.selectList(lambdaQueryWrapper);
 
-        for (Template mtStore : dataList) {
-            MtMerchant mtMerchant = mtMerchantMapper.selectById(mtStore.getMerchantId());
-            if (mtMerchant != null) {
-                mtStore.setMerchantName(mtMerchant.getName());
-                mtStore.setStoreId(mtMerchant.getId());
+        for (Template item : dataList) {
+            Integer merchantId = item.getMerchantId();
+            if ((merchantId == null || merchantId <= 0) && item.getStoreId() > 0) {
+                MtStore store = mtStoreMapper.selectById(item.getStoreId());
+                if (store != null && store.getMerchantId() != null) {
+                    merchantId = store.getMerchantId();
+                }
+            }
+            if (merchantId != null && merchantId > 0) {
+                MtMerchant mtMerchant = mtMerchantMapper.selectById(merchantId);
+                if (mtMerchant != null) {
+                    item.setMerchantName(mtMerchant.getName());
+                }
             }
         }
 
@@ -137,14 +149,26 @@ public class TemplateServiceImpl extends ServiceImpl<TemplateMapper, Template> i
     @Override
     @Transactional(rollbackFor = Exception.class)
     @OperationServiceLog(description = "更新小程序全局配置")
-    public Template updateTemplate(Template Template) throws BusinessCheckException {
-        // Template = queryMt_all_settingById(Template.getId());
-        if (Template == null) {
+    public Template updateTemplate(Template template) throws BusinessCheckException {
+        if (template == null || template.getId() <= 0) {
             throw new BusinessCheckException("该小程序全局配置状态异常");
         }
-        Template.setUpdateTime(LocalDateTime.now());
-        templateMapper.updateById(Template);
-        return Template;
+        Template existing = templateMapper.selectById(template.getId());
+        if (existing == null) {
+            throw new BusinessCheckException("该小程序全局配置状态异常");
+        }
+        existing.setColor(template.getColor());
+        existing.setTemplateValue(template.getTemplateValue());
+        existing.setOperator(template.getOperator());
+        existing.setUpdateTime(LocalDateTime.now());
+        if (template.getMerchantId() > 0) {
+            existing.setMerchantId(template.getMerchantId());
+        }
+        if (template.getStoreId() > 0) {
+            existing.setStoreId(template.getStoreId());
+        }
+        templateMapper.updateById(existing);
+        return existing;
     }
 
    /**

@@ -73,7 +73,6 @@ public class BackendCouponGroupController extends BaseController {
     @Operation(summary = "查询卡券分组列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:group:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -159,7 +158,6 @@ public class BackendCouponGroupController extends BaseController {
     @Operation(summary = "保存卡券分组信息")
     @Debounce
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:group:edit')")
     public ResponseObject save(HttpServletRequest request, @RequestBody ReqCouponGroupDto reqCouponGroupDto) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -187,7 +185,6 @@ public class BackendCouponGroupController extends BaseController {
     @Operation(summary = "删除卡券分组")
     @Debounce
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:group:edit')")
     public ResponseObject delete(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -218,7 +215,6 @@ public class BackendCouponGroupController extends BaseController {
     @Operation(summary = "更新分组状态")
     @Debounce
     @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:group:edit')")
     public ResponseObject updateStatus(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -249,7 +245,6 @@ public class BackendCouponGroupController extends BaseController {
     @Operation(summary = "获取分组详情")
     @Debounce
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('coupon:group:index')")
     public ResponseObject info(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -276,7 +271,6 @@ public class BackendCouponGroupController extends BaseController {
     @Operation(summary = "导出模板文件")
     @Debounce
     @RequestMapping(value = "/exportTemplate", method = RequestMethod.GET)
-    @CrossOrigin
     public void exportTemplate(HttpServletRequest request, HttpServletResponse response) throws BusinessCheckException {
         ClassLoader classLoader = this.getClass().getClassLoader();
         URL url = classLoader.getResource("");
@@ -307,7 +301,6 @@ public class BackendCouponGroupController extends BaseController {
     @Operation(summary = "上传文件")
     @Debounce
     @RequestMapping(value = "/upload/", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    @CrossOrigin
     public ResponseObject uploadFile(HttpServletRequest request, @RequestParam("fileInput") MultipartFile file) throws Exception {
         String token = request.getHeader("Access-Token");
         AccountInfo accountInfo = TokenUtil.getAccountInfoByToken(token);
@@ -326,7 +319,6 @@ public class BackendCouponGroupController extends BaseController {
     @Operation(summary = "查询分组列表")
     @Debounce
     @RequestMapping(value = "/quickSearch", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject quickSearch(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         AccountInfo accountInfo = TokenUtil.getAccountInfoByToken(token);

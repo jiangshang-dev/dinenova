@@ -32,7 +32,6 @@ public class BackendDiyPageController extends BaseController {
 
     private MtPageService pageService;
 
-    @Debounce
     @GetMapping(value = "/getPage")
     @Operation(summary = "首页装修返回数据")
     @PreAuthorize("@pms.hasPermission('diy:index')")
@@ -43,12 +42,15 @@ public class BackendDiyPageController extends BaseController {
             return getFailureResult(1001, "请先登录");
         }
         // 店铺id
-        Integer storeId = request.getParameter("storeId") == null ? null : Integer.parseInt(request.getParameter("storeId"));
-        if (storeId == null) {
+        Integer storeId = parseInt(request.getParameter("storeId"));
+        if (storeId == null || storeId <= 0) {
             return getFailureResult(1002, "请先选择店铺");
         }
         // 暂存 0、发布到当前店铺 1、发布到多门店 2、使用上次 3
-        Integer type = request.getParameter("type") == null ? 0 : Integer.parseInt(request.getParameter("type"));
+        Integer type = parseInt(request.getParameter("type"));
+        if (type == null) {
+            type = 0;
+        }
 
         PageDto pageDto = pageService.detail(storeId, type);
         Map<String, Object> result = new HashMap<>();
@@ -71,25 +73,30 @@ public class BackendDiyPageController extends BaseController {
             return getFailureResult(201, "平台方账户无操作权限");
         }
 
-        // 店铺id：支持发布到多门店，当前门店
-        // String storeId1 = request.getParameter("storeId");
-        Integer storeId1 = (Integer) param.get("storeId");
-        Integer storeId = storeId1 == null ? accountInfo.getStoreId() : storeId1;
-        // 页面数据  大json
-        // String params = request.getParameter("params") == null ? "" : request.getParameter("params");
-        Object params = param.get("params");
-        // string转json
-        JSONObject jsonObject = new JSONObject(params);
-        // 暂存 0、发布到当前店铺 1、发布到多门店 2、使用上次 3
-        // String parameter = request.getParameter("type");
-        String type = (String) param.get("type");
-        // String type = StringUtils.isBlank(parameter) ? "" : parameter;
-
-        if ("2".equals(type)) {
+        Integer storeId = parseInt(param.get("storeId"));
+        if (storeId == null || storeId <= 0) {
             storeId = accountInfo.getStoreId();
+        }
+        Object params = param.get("params");
+        JSONObject jsonObject = new JSONObject(params);
+        String type = param.get("type") == null ? "" : String.valueOf(param.get("type"));
+
+        if (!"2".equals(type) && (storeId == null || storeId <= 0)) {
+            return getFailureResult(1002, "请先选择店铺");
         }
         boolean result = pageService.edit(storeId, jsonObject.toString(), type, accountInfo);
         return getSuccessResult(result);
+    }
+
+    private Integer parseInt(Object value) {
+        if (value == null || StringUtils.isBlank(value.toString())) {
+            return null;
+        }
+        try {
+            return Integer.parseInt(value.toString().trim());
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
 }

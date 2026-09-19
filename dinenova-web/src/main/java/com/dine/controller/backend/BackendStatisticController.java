@@ -58,7 +58,6 @@ public class BackendStatisticController extends BaseController {
     @Operation(summary = "数据概况")
     @Debounce
     @RequestMapping(value = "/main", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject main(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException, ParseException {
         String token = request.getHeader("Access-Token");
         String startTimeStr = param.get("startTime") == null ? "" : param.get("startTime").toString();
@@ -118,7 +117,6 @@ public class BackendStatisticController extends BaseController {
     @Operation(summary = "排行榜数据")
     @Debounce
     @RequestMapping(value = "/top", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject top(HttpServletRequest request, @RequestBody Map<String, Object> param) throws ParseException {
         String token = request.getHeader("Access-Token");
         String startTimeStr = param.get("startTime") == null ? "" : param.get("startTime").toString();
@@ -154,7 +152,6 @@ public class BackendStatisticController extends BaseController {
     @Operation(summary = "获取会员数量")
     @Debounce
     @RequestMapping(value = "/totalMember", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject totalMember(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         AccountInfo accountInfo = TokenUtil.getAccountInfoByToken(token);

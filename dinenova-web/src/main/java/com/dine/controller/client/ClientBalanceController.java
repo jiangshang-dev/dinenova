@@ -80,7 +80,6 @@ public class ClientBalanceController extends BaseController {
     @Operation(summary = "充值配置")
     @Debounce
     @RequestMapping(value = "/setting", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject setting(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String merchantNo = request.getHeader("merchantNo");
@@ -136,7 +135,6 @@ public class ClientBalanceController extends BaseController {
     @Operation(summary = "充值余额")
     @Debounce
     @RequestMapping(value = "/doRecharge", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject doRecharge(HttpServletRequest request, @RequestBody RechargeParam rechargeParam) throws BusinessCheckException {
         Integer storeId = request.getHeader("storeId") == null ? 0 : Integer.parseInt(request.getHeader("storeId"));
         String platform = request.getHeader("platform") == null ? "" : request.getHeader("platform");
@@ -238,7 +236,6 @@ public class ClientBalanceController extends BaseController {
     @Operation(summary = "余额明细")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request, @RequestBody BalanceListParam balanceListParam) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         Integer page = balanceListParam.getPage() == null ? Constants.PAGE_NUMBER : balanceListParam.getPage();

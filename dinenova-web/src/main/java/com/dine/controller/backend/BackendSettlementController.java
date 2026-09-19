@@ -67,7 +67,6 @@ public class BackendSettlementController extends BaseController {
     @Operation(summary = "结算列表查询")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('settlement:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -145,7 +144,6 @@ public class BackendSettlementController extends BaseController {
     @Operation(summary = "获取结算单详情")
     @Debounce
     @RequestMapping(value = "/info", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('settlement:index')")
     public ResponseObject info(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -185,7 +183,6 @@ public class BackendSettlementController extends BaseController {
     @Operation(summary = "提交结算")
     @Debounce
     @RequestMapping(value = "/doSubmit", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('settlement:doSubmit')")
     public ResponseObject doSubmit(HttpServletRequest request, @RequestBody SettlementRequest requestParam) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -211,7 +208,6 @@ public class BackendSettlementController extends BaseController {
     @Operation(summary = "确认结算")
     @Debounce
     @RequestMapping(value = "/doConfirm", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('settlement:doConfirm')")
     public ResponseObject doConfirm(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

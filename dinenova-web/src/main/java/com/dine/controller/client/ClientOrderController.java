@@ -54,7 +54,6 @@ public class ClientOrderController extends BaseController {
     @Operation(summary = "获取我的订单列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request, @RequestBody OrderListParam orderListParam) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         Integer tableId = request.getHeader("tableId") == null ? 0 : Integer.parseInt(request.getHeader("tableId"));
@@ -83,7 +82,6 @@ public class ClientOrderController extends BaseController {
     @Operation(summary = "获取订单详情")
     @Debounce
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject detail(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         UserInfo userInfo = TokenUtil.getUserInfoByToken(token);
@@ -107,7 +105,6 @@ public class ClientOrderController extends BaseController {
     @Operation(summary = "取消订单")
     @Debounce
     @RequestMapping(value = "/cancel", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject cancel(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         UserInfo mtUser = TokenUtil.getUserInfoByToken(token);
@@ -137,7 +134,6 @@ public class ClientOrderController extends BaseController {
     @Operation(summary = "确认收货")
     @Debounce
     @RequestMapping(value = "/receipt", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject receipt(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         UserInfo mtUser = TokenUtil.getUserInfoByToken(token);
@@ -170,7 +166,6 @@ public class ClientOrderController extends BaseController {
     @Operation(summary = "获取待办订单数量")
     @Debounce
     @RequestMapping(value = "/todoCounts", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject todoCounts(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         UserInfo userInfo = TokenUtil.getUserInfoByToken(token);

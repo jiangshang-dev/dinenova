@@ -33,7 +33,6 @@ public class ClientHelpController extends BaseController {
     @Operation(summary = "查询帮助列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
 

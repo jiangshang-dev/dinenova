@@ -95,7 +95,6 @@ public class ClientPayController extends BaseController {
     @Operation(summary = "支付前查询")
     @Debounce
     @RequestMapping(value = "/prePay", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject prePay(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         Integer storeId = request.getHeader("storeId") == null ? 0 : Integer.parseInt(request.getHeader("storeId"));
@@ -165,7 +164,6 @@ public class ClientPayController extends BaseController {
     @Operation(summary = "发起支付")
     @Debounce
     @RequestMapping(value = "/doPay", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject doPay(HttpServletRequest request) throws BusinessCheckException {
        Map<String, Object> result = paymentService.doPay(request);
        return getSuccessResult(result);
@@ -177,7 +175,6 @@ public class ClientPayController extends BaseController {
     @Operation(summary = "微信支付回调")
     @Debounce
     @RequestMapping(value = "/weixinCallback", method = RequestMethod.POST)
-    @CrossOrigin
     public void weixinCallback(HttpServletRequest request, HttpServletResponse response) throws Exception {
         logger.info("微信支付结果回调....");
 
@@ -254,7 +251,6 @@ public class ClientPayController extends BaseController {
     @Operation(summary = "支付宝支付回调")
     @Debounce
     @RequestMapping(value = "/aliPayCallback", method = RequestMethod.POST)
-    @CrossOrigin
     public String aliPayCallback(HttpServletRequest request) throws Exception {
         try {
             // 获取支付宝POST过来反馈信息

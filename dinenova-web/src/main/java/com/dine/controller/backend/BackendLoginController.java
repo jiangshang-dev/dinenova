@@ -124,7 +124,6 @@ public class BackendLoginController extends BaseController {
     @Operation(summary = "获取登录路由菜单接口")
     @Debounce
     @RequestMapping(value = "/getRouters", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject getRouters(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         AccountInfo accountInfo = TokenUtil.getAccountInfoByToken(token);

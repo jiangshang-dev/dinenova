@@ -60,7 +60,6 @@ public class BackendHomeController extends BaseController {
     @Operation(summary = "首页统计数据")
     @Debounce
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject index(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
 
@@ -119,7 +118,6 @@ public class BackendHomeController extends BaseController {
     @Operation(summary = "首页图表统计数据")
     @Debounce
     @RequestMapping(value = "/statistic", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject statistic(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String tag = request.getParameter("tag") == null ? "order,user_active" : request.getParameter("tag");
@@ -177,7 +175,6 @@ public class BackendHomeController extends BaseController {
     @Operation(summary = "获取收款结果")
     @Debounce
     @RequestMapping(value = "/cashierResult", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject cashierResult(HttpServletRequest request) throws BusinessCheckException {
         Integer orderId = request.getParameter("orderId") == null ? 0 : Integer.parseInt(request.getParameter("orderId"));
 

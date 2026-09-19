@@ -29,7 +29,7 @@ dinenova:
     accessKey: LTAI5tAMhyQ5M4ax36oedKcQ
     secretKey: DqOLunL4Qt8bWSxhi2mEktfcUKacVG
     endpoint: oss-cn-beijing.aliyuncs.com
-    bucketName: mymianshioffer
+    bucketName: dinenova
     folder: uploads
 
 mybatis-plus:

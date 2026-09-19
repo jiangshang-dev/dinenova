@@ -60,7 +60,6 @@ public class BackendSmsController extends BaseController {
     @Operation(summary = "查询已发短信列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         Integer page = request.getParameter("page") == null ? Constants.PAGE_NUMBER : Integer.parseInt(request.getParameter("page"));
@@ -103,7 +102,6 @@ public class BackendSmsController extends BaseController {
     @Operation(summary = "获取短信设置")
     @Debounce
     @RequestMapping(value = "/setting", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('smsTemplate:edit')")
     public ResponseObject setting(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -150,7 +148,6 @@ public class BackendSmsController extends BaseController {
     @Operation(summary = "保存短信设置")
     @Debounce
     @RequestMapping(value = "/saveSetting", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('smsTemplate:edit')")
     public ResponseObject saveSetting(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

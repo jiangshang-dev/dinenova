@@ -54,7 +54,6 @@ public class ClientAddressController extends BaseController {
     @Operation(summary ="保存收货地址", description ="保存会员的收货地址")
     @Debounce
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject save(HttpServletRequest request, @RequestBody AddressRequest address) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
 
@@ -99,7 +98,6 @@ public class ClientAddressController extends BaseController {
     @Operation(summary ="获取个人收货地址列表", description ="获取个人收货地址列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException, InvocationTargetException, IllegalAccessException {
         String token = request.getHeader("Access-Token");
 
@@ -159,7 +157,6 @@ public class ClientAddressController extends BaseController {
     @Operation(summary ="获取收货地址详情", description ="根据ID获取会员收货地址详情")
     @Debounce
     @RequestMapping(value = "/detail", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject detail(HttpServletRequest request, @RequestBody AddressDetailParam addressDetailParam) throws BusinessCheckException, InvocationTargetException, IllegalAccessException {
         String token = request.getHeader("Access-Token") == null ? "" : request.getHeader("Access-Token");
         String addressIdStr = addressDetailParam.getAddressId() == null ? "0" : addressDetailParam.getAddressId();

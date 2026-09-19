@@ -63,9 +63,7 @@ public class BackendDutyController extends BaseController {
      * @return 角色信息列表
      */
     @Operation(summary = "获取角色列表")
-    @Debounce
-    @RequestMapping(value = "/list")
-    @CrossOrigin
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     @PreAuthorize("@pms.hasPermission('system:role:index')")
     public ResponseObject list(HttpServletRequest request) {
         String token = request.getHeader("Access-Token");
@@ -129,7 +127,6 @@ public class BackendDutyController extends BaseController {
     @Operation(summary = "新增角色")
     @Debounce
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('system:role:add')")
     public ResponseObject addHandler(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -174,9 +171,7 @@ public class BackendDutyController extends BaseController {
      * @return 账户信息
      */
     @Operation(summary = "获取角色详情")
-    @Debounce
     @RequestMapping(value = "/info/{roleId}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('system:role:index')")
     public ResponseObject info(HttpServletRequest request, @PathVariable("roleId") Long roleId) {
         String token = request.getHeader("Access-Token");
@@ -214,7 +209,6 @@ public class BackendDutyController extends BaseController {
     @Operation(summary = "修改角色")
     @Debounce
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('system:role:edit')")
     public ResponseObject updateHandler(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -267,7 +261,6 @@ public class BackendDutyController extends BaseController {
     @Operation(summary = "删除角色信息")
     @Debounce
     @RequestMapping(value = "/delete/{roleId}", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('system:role:delete')")
     public ResponseObject deleteRole(HttpServletRequest request, @PathVariable("roleId") Long roleId) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -288,7 +281,6 @@ public class BackendDutyController extends BaseController {
     @Operation(summary = "修改角色状态")
     @Debounce
     @RequestMapping(value = "/changeStatus", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('system:role:edit')")
     public ResponseObject changeStatus(HttpServletRequest request, @RequestBody DutyStatusRequest dutyStatusRequest) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

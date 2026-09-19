@@ -51,7 +51,6 @@ public class BackendSmsTemplateController extends BaseController {
     @Operation(summary = "查询短信模板列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('smsTemplate:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -96,7 +95,6 @@ public class BackendSmsTemplateController extends BaseController {
     @Operation(summary = "保存短信模板")
     @Debounce
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('smsTemplate:edit')")
     public ResponseObject saveHandler(HttpServletRequest request, @RequestBody SmsTemplateDto smsTemplateDto) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -118,7 +116,6 @@ public class BackendSmsTemplateController extends BaseController {
     @Operation(summary = "模板详情")
     @Debounce
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('smsTemplate:index')")
     public ResponseObject info(HttpServletRequest request, @PathVariable("id") Long id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -144,7 +141,6 @@ public class BackendSmsTemplateController extends BaseController {
     @Operation(summary = "删除短信模板")
     @Debounce
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('smsTemplate:edit')")
     public ResponseObject delete(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

@@ -50,7 +50,6 @@ public class ClientMyCouponController extends BaseController {
     @Operation(summary = "查询我的卡券")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String status = request.getParameter("status") == null ? "" : request.getParameter("status");
@@ -83,7 +82,6 @@ public class ClientMyCouponController extends BaseController {
     @Operation(summary = "查询我的卡券是否已使用")
     @Debounce
     @RequestMapping(value = "/isUsed", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject isUsed(HttpServletRequest request, @RequestParam Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         Integer userCouponId = param.get("id") == null ? 0 : Integer.parseInt(param.get("id").toString());

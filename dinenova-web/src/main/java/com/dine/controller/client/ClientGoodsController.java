@@ -70,7 +70,6 @@ public class ClientGoodsController extends BaseController {
     @Operation(summary = "获取商品分类列表")
     @Debounce
     @RequestMapping(value = "/cateList", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject cateList(HttpServletRequest request) throws BusinessCheckException {
         String merchantNo = request.getHeader("merchantNo") == null ? "" : request.getHeader("merchantNo");
         Integer storeId = request.getHeader("storeId") == null ? 0 : Integer.parseInt(request.getHeader("storeId"));
@@ -126,7 +125,6 @@ public class ClientGoodsController extends BaseController {
     @Operation(summary = "获取商品列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         Integer storeId = request.getHeader("storeId") == null ? 0 : Integer.parseInt(request.getHeader("storeId"));
         Map<String, Object> goodsData = goodsService.getStoreGoodsList(storeId, "", 0,1, 200);
@@ -139,7 +137,6 @@ public class ClientGoodsController extends BaseController {
     @Operation(summary = "搜索商品")
     @Debounce
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject search(HttpServletRequest request, @RequestBody Map<String, Object> params) throws BusinessCheckException {
         Integer storeId = request.getHeader("storeId") == null ? 0 : Integer.parseInt(request.getHeader("storeId"));
         String merchantNo = request.getHeader("merchantNo") == null ? "" : request.getHeader("merchantNo");
@@ -181,7 +178,6 @@ public class ClientGoodsController extends BaseController {
     @Operation(summary = "获取商品详情")
     @Debounce
     @RequestMapping(value = "/detail", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject detail(@RequestBody GoodsInfoParam goodsInfoParam) throws BusinessCheckException, InvocationTargetException, IllegalAccessException {
         String goodsId = goodsInfoParam.getGoodsId() == null ? "0" : goodsInfoParam.getGoodsId();
         if (StringUtil.isEmpty(goodsId)) {
@@ -297,7 +293,6 @@ public class ClientGoodsController extends BaseController {
     @Operation(summary = "通过sku编码获取商品信息")
     @Debounce
     @RequestMapping(value = "/getGoodsInfoBySkuNo", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject getGoodsInfoBySkuNo(HttpServletRequest request, @RequestBody GoodsInfoParam goodsInfoParam) throws BusinessCheckException, InvocationTargetException, IllegalAccessException {
         String merchantNo = request.getHeader("merchantNo") == null ? "" : request.getHeader("merchantNo");
         String skuNo = goodsInfoParam.getSkuNo() == null ? "" : goodsInfoParam.getSkuNo();

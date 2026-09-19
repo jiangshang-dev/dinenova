@@ -55,7 +55,6 @@ public class ClientGiveController extends BaseController {
     @Operation(summary = "转赠卡券")
     @Debounce
     @RequestMapping(value = "/doGive", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject doGive(HttpServletRequest request, @RequestBody GiveParam giveParam) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
 
@@ -100,7 +99,6 @@ public class ClientGiveController extends BaseController {
     @Operation(summary = "查询转赠记录")
     @Debounce
     @RequestMapping(value = "/giveLog", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject giveLog(HttpServletRequest request, @RequestBody GiveListParam giveListParam) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
 

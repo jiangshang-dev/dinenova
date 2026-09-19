@@ -50,7 +50,6 @@ public class ClientArticleController extends BaseController {
     @Operation(summary ="获取文章列表", description ="获取文章列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request,  @RequestBody ArticleListParam articleListParam) throws BusinessCheckException, InvocationTargetException, IllegalAccessException {
         String title = articleListParam.getTitle();
         Integer page = articleListParam.getPage() == null ? Constants.PAGE_NUMBER : articleListParam.getPage();
@@ -88,7 +87,6 @@ public class ClientArticleController extends BaseController {
     @Operation(summary ="获取文章详情", description ="根据ID获取文章详情")
     @Debounce
     @RequestMapping(value = "/detail", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject detail(@RequestBody ArticleDetailParam articleDetailParam) throws BusinessCheckException, InvocationTargetException, IllegalAccessException {
         String articleIdStr = articleDetailParam.getArticleId() == null ? "" : articleDetailParam.getArticleId();
         Integer articleId = 0;

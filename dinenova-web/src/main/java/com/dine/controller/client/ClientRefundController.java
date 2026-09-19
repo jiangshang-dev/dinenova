@@ -50,7 +50,6 @@ public class ClientRefundController extends BaseController {
     @Operation(summary = "获取售后订单列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request, @RequestParam Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         UserInfo userInfo = TokenUtil.getUserInfoByToken(token);
@@ -84,7 +83,6 @@ public class ClientRefundController extends BaseController {
     @Operation(summary = "售后订单提交")
     @Debounce
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject submit(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         UserInfo mtUser = TokenUtil.getUserInfoByToken(token);
@@ -133,7 +131,6 @@ public class ClientRefundController extends BaseController {
     @Operation(summary = "获取售后订单详情")
     @Debounce
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject detail(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         UserInfo mtUser = TokenUtil.getUserInfoByToken(token);

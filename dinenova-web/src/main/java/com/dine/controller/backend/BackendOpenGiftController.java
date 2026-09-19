@@ -57,7 +57,6 @@ public class BackendOpenGiftController extends BaseController {
     @Operation(summary = "开卡赠礼列表查询")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('openGift:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -112,7 +111,6 @@ public class BackendOpenGiftController extends BaseController {
     @Operation(summary = "开卡赠礼详情")
     @Debounce
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('openGift:index')")
     public ResponseObject info(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -146,7 +144,6 @@ public class BackendOpenGiftController extends BaseController {
     @Operation(summary = "提交开卡赠礼")
     @Debounce
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('openGift:add')")
     public ResponseObject handleSave(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -215,7 +212,6 @@ public class BackendOpenGiftController extends BaseController {
     @Operation(summary = "更新开卡赠礼")
     @Debounce
     @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('openGift:index')")
     public ResponseObject updateStatus(@RequestBody Map<String, Object> param) throws BusinessCheckException {
         Integer id = param.get("id") == null ? 0 : Integer.parseInt(param.get("id").toString());
@@ -243,7 +239,6 @@ public class BackendOpenGiftController extends BaseController {
     @Operation(summary = "删除开卡赠礼")
     @Debounce
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('openGift:index')")
     public ResponseObject delete(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

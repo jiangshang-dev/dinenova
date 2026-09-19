@@ -68,7 +68,6 @@ public class BackendBalanceController extends BaseController {
     @Operation(summary = "余额明细列表查询")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('balance:list')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -129,7 +128,6 @@ public class BackendBalanceController extends BaseController {
     @Operation(summary = "提交充值")
     @Debounce
     @RequestMapping(value = "/doRecharge", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('balance:modify')")
     public ResponseObject doRecharge(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -183,7 +181,6 @@ public class BackendBalanceController extends BaseController {
     @Operation(summary = "发放余额")
     @Debounce
     @RequestMapping(value = "/distribute", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('balance:distribute')")
     public ResponseObject distribute(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -210,7 +207,6 @@ public class BackendBalanceController extends BaseController {
     @Operation(summary = "充值设置详情")
     @Debounce
     @RequestMapping(value = "/setting", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('balance:setting')")
     public ResponseObject setting(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -263,7 +259,6 @@ public class BackendBalanceController extends BaseController {
     @Operation(summary = "保存充值设置")
     @Debounce
     @RequestMapping(value = "/saveSetting", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('balance:setting')")
     public ResponseObject saveSetting(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

@@ -38,7 +38,6 @@ public class ClientSettlementController extends BaseController {
     @Operation(summary = "提交订单结算")
     @Debounce
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject submit(HttpServletRequest request, @RequestBody SettlementParam param) throws BusinessCheckException {
         String isWechat = request.getHeader("isWechat") == null ? YesOrNoEnum.NO.getKey() : request.getHeader("isWechat");
         param.setIsWechat(isWechat);

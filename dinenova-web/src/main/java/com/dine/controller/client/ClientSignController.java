@@ -86,7 +86,6 @@ public class ClientSignController extends BaseController {
     @Debounce
     @RequestMapping(value = "/mpWxLogin", method = RequestMethod.POST)
     @ResponseBody
-    @CrossOrigin
     public ResponseObject mpWxLogin(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String storeId = request.getHeader("storeId") == null ? "0" : request.getHeader("storeId");
         String merchantNo = request.getHeader("merchantNo") == null ? "" : request.getHeader("merchantNo");
@@ -143,7 +142,6 @@ public class ClientSignController extends BaseController {
     @Debounce
     @RequestMapping(value = "/mpWxAuth", method = RequestMethod.POST)
     @ResponseBody
-    @CrossOrigin
     public ResponseObject mpWxAuth(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String merchantNo = request.getHeader("merchantNo") == null ? "" : request.getHeader("merchantNo");
         String storeId = request.getHeader("storeId") == null ? "0" : request.getHeader("storeId");
@@ -182,7 +180,6 @@ public class ClientSignController extends BaseController {
     @Operation(summary = "通过账号密码注册")
     @Debounce
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject register(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String merchantNo = request.getHeader("merchantNo") == null ? "" : request.getHeader("merchantNo");
         String account = param.get("account").toString();
@@ -255,7 +252,6 @@ public class ClientSignController extends BaseController {
     @Operation(summary = "通过短信或账号密码登录")
     @Debounce
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject signIn(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String merchantNo = request.getHeader("merchantNo") == null ? "" : request.getHeader("merchantNo");
@@ -367,7 +363,6 @@ public class ClientSignController extends BaseController {
     @Operation(summary = "获取会员信息")
     @Debounce
     @RequestMapping(value = "/doGetUserInfo", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject doGetUserInfo(HttpServletRequest request) {
         String token = request.getHeader("Access-Token");
         UserInfo userInfo = TokenUtil.getUserInfoByToken(token);
@@ -383,7 +378,6 @@ public class ClientSignController extends BaseController {
     @Operation(summary = "获取授权登录配置")
     @Debounce
     @RequestMapping(value = "/authLoginConfig", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject authLoginConfig(HttpServletRequest request) {
         String merchantNo = request.getHeader("merchantNo") == null ? "" : request.getHeader("merchantNo");
 
@@ -408,7 +402,6 @@ public class ClientSignController extends BaseController {
     @Operation(summary = "退出登录")
     @Debounce
     @RequestMapping(value = "/signOut", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject doLogout(HttpServletRequest request) {
         String token = request.getHeader("Access-Token");
         boolean flag = TokenUtil.removeToken(token);

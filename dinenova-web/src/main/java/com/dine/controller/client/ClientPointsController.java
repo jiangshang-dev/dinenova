@@ -47,7 +47,6 @@ public class ClientPointsController extends BaseController {
     @Operation(summary = "查询我的积分明细")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         Integer page = request.getParameter("page") == null ? Constants.PAGE_NUMBER : Integer.parseInt(request.getParameter("page"));
@@ -84,7 +83,6 @@ public class ClientPointsController extends BaseController {
     @Operation(summary = "转赠积分")
     @Debounce
     @RequestMapping(value = "/doGive", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject doGive(HttpServletRequest request, @RequestBody Map<String, Object> param) {
         String token = request.getHeader("Access-Token");
 

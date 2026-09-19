@@ -32,9 +32,7 @@ public class MtHomeLinkController extends BaseController  {
 
     private MtHomeLinkService homeLinkService;
 
-    @Debounce
     @GetMapping(value = "/list")
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('link:list')")
     public ResponseObject list() {
         LambdaQueryWrapper<MtHomeLink> queryWrapper = new LambdaQueryWrapper<>();
@@ -45,7 +43,6 @@ public class MtHomeLinkController extends BaseController  {
 
     @Operation(summary = "查询首页跳转链接")
     @GetMapping(value = "/queryList")
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('link:list')")
     public ResponseObject queryHandler(HttpServletRequest request) {
         String token = request.getHeader("Access-Token");
@@ -74,9 +71,7 @@ public class MtHomeLinkController extends BaseController  {
         return getSuccessResult(result);
     }
 
-    @Debounce
     @GetMapping(value = "/info")
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('link:list')")
     public ResponseObject info(Integer id) {
         MtHomeLink mtHomeLink = homeLinkService.getById(id);
@@ -85,7 +80,6 @@ public class MtHomeLinkController extends BaseController  {
 
     @Debounce
     @PostMapping(value = "/save")
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('link:save')")
     public ResponseObject save(@RequestBody MtHomeLink mtHomeLink) {
         if (mtHomeLink.getId() == null) {
@@ -99,7 +93,6 @@ public class MtHomeLinkController extends BaseController  {
 
     @Debounce
     @DeleteMapping(value = "/delete")
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('link:delete')")
     public ResponseObject delete(Integer id) {
         MtHomeLink mtHomeLink = homeLinkService.getById(id);

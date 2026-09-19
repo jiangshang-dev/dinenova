@@ -31,6 +31,11 @@ public class ControllerDebounceAspect {
 
     @Before(value = "@annotation(anno)")
     public void before(Debounce anno) {
+        String method = request.getMethod();
+        if ("GET".equalsIgnoreCase(method) || "HEAD".equalsIgnoreCase(method) || "OPTIONS".equalsIgnoreCase(method)) {
+            return;
+        }
+
         long now = System.currentTimeMillis();
 
         //根据用户、URI、参数生成key

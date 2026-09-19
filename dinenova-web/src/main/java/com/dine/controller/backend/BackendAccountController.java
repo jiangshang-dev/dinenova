@@ -75,7 +75,6 @@ public class BackendAccountController extends BaseController {
     @Operation(summary = "账户信息列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('system:account:index')")
     public ResponseObject list(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -129,7 +128,6 @@ public class BackendAccountController extends BaseController {
     @Operation(summary = "获取账户详情")
     @Debounce
     @RequestMapping(value = "/info/{userId}", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject info(HttpServletRequest request, @PathVariable("userId") Long userId) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         AccountInfo accountInfo = TokenUtil.getAccountInfoByToken(token);
@@ -208,7 +206,6 @@ public class BackendAccountController extends BaseController {
     @Operation(summary = "新增账户")
     @Debounce
     @RequestMapping(value = "/doCreate", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('system:account:add')")
     public ResponseObject doCreate(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -275,7 +272,6 @@ public class BackendAccountController extends BaseController {
     @Operation(summary = "修改账户信息")
     @Debounce
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('system:account:edit')")
     public ResponseObject update(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -347,7 +343,6 @@ public class BackendAccountController extends BaseController {
     @Operation(summary = "删除账户信息")
     @Debounce
     @RequestMapping(value = "/delete/{userIds}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('system:account:delete')")
     public ResponseObject deleteAccount(HttpServletRequest request, @PathVariable("userIds") String userIds) {
         String token = request.getHeader("Access-Token");
@@ -387,7 +382,6 @@ public class BackendAccountController extends BaseController {
     @Operation(summary = "更新账户状态")
     @Debounce
     @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('system:account:edit')")
     public ResponseObject updateStatus(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -418,7 +412,6 @@ public class BackendAccountController extends BaseController {
     @Operation(summary = "修改账户密码")
     @Debounce
     @RequestMapping(value = "/resetPwd", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('system:account:edit')")
     public ResponseObject resetPwd(HttpServletRequest request, @RequestBody Map<String, Object> param) {
         String token = request.getHeader("Access-Token");

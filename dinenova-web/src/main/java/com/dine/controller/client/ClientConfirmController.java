@@ -65,7 +65,6 @@ public class ClientConfirmController extends BaseController {
     @Operation(summary = "核销卡券")
     @Debounce
     @RequestMapping(value = "/doConfirm", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject doConfirm(HttpServletRequest request, @RequestBody ConfirmParam confirmParam) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String code = confirmParam.getCode() == null ? "" : confirmParam.getCode();

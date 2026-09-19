@@ -81,7 +81,6 @@ public class BackendOrderController extends BaseController {
     @Operation(summary = "订单列表查询")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('order:index')")
     public ResponseObject list(HttpServletRequest request, @RequestBody OrderListParam orderListParam) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -184,7 +183,6 @@ public class BackendOrderController extends BaseController {
     @Operation(summary = "获取订单详情")
     @Debounce
     @RequestMapping(value = "/info/{orderId}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('order:detail')")
     public ResponseObject info(HttpServletRequest request, @PathVariable("orderId") Integer orderId) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -233,7 +231,6 @@ public class BackendOrderController extends BaseController {
     @Operation(summary = "确认发货")
     @Debounce
     @RequestMapping(value = "/delivered", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('order:delivery')")
     public ResponseObject delivered(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -291,7 +288,6 @@ public class BackendOrderController extends BaseController {
     @Operation(summary = "修改订单")
     @Debounce
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('order:edit')")
     public ResponseObject save(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -340,7 +336,6 @@ public class BackendOrderController extends BaseController {
     @Operation(summary = "验证并核销订单")
     @Debounce
     @RequestMapping(value = "/verify", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('cashier:confirmOrder')")
     public ResponseObject verify(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -379,7 +374,6 @@ public class BackendOrderController extends BaseController {
     @Operation(summary = "最新订单列表查询")
     @Debounce
     @RequestMapping(value = "/latest", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject latest(HttpServletRequest request, @RequestBody OrderListParam orderListParam) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         AccountInfo accountInfo = TokenUtil.getAccountInfoByToken(token);
@@ -416,7 +410,6 @@ public class BackendOrderController extends BaseController {
     @Operation(summary = "删除订单")
     @Debounce
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('order:delete')")
     public ResponseObject delete(HttpServletRequest request, @PathVariable("id") Integer id) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -440,7 +433,6 @@ public class BackendOrderController extends BaseController {
     @Operation(summary = "订单设置详情")
     @Debounce
     @RequestMapping(value = "/setting", method = RequestMethod.GET)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('order:setting')")
     public ResponseObject setting(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
@@ -481,7 +473,6 @@ public class BackendOrderController extends BaseController {
     @Operation(summary = "保存订单设置")
     @Debounce
     @RequestMapping(value = "/saveSetting", method = RequestMethod.POST)
-    @CrossOrigin
     @PreAuthorize("@pms.hasPermission('order:setting')")
     public ResponseObject saveSetting(HttpServletRequest request, @RequestBody Map<String, Object> param) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");

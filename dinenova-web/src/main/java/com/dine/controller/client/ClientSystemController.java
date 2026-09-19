@@ -72,7 +72,6 @@ public class ClientSystemController extends BaseController {
     @Operation(summary = "获取系统配置")
     @Debounce
     @RequestMapping(value = "/config", method = RequestMethod.GET)
-    @CrossOrigin
     public ResponseObject config(HttpServletRequest request) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         String platform = request.getHeader("platform");

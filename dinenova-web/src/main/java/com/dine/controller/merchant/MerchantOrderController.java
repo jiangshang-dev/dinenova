@@ -57,7 +57,6 @@ public class MerchantOrderController extends BaseController {
     @Operation(summary = "获取订单列表")
     @Debounce
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject list(HttpServletRequest request, @RequestBody OrderListParam orderListParam) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         UserInfo userInfo = TokenUtil.getUserInfoByToken(token);
@@ -87,7 +86,6 @@ public class MerchantOrderController extends BaseController {
     @Operation(summary = "获取订单详情")
     @Debounce
     @RequestMapping(value = "/detail", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject detail(HttpServletRequest request, @RequestBody OrderDetailParam orderDetailParam) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
 
@@ -112,7 +110,6 @@ public class MerchantOrderController extends BaseController {
     @Operation(summary = "取消订单")
     @Debounce
     @RequestMapping(value = "/cancel", method = RequestMethod.POST)
-    @CrossOrigin
     public ResponseObject cancel(HttpServletRequest request, @RequestBody OrderDetailParam orderDetailParam) throws BusinessCheckException {
         String token = request.getHeader("Access-Token");
         UserInfo mtUser = TokenUtil.getUserInfoByToken(token);

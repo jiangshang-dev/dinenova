@@ -486,12 +486,11 @@ public class CouponServiceImpl extends ServiceImpl<MtCouponMapper, MtCoupon> imp
         }
 
         List<CouponDto> content = new ArrayList<>();
-        String baseImage = settingService.getUploadBasePath();
         for (int i = 0; i < dataList.size(); i++) {
             CouponDto item = new CouponDto();
             BeanUtils.copyProperties(dataList.get(i), item);
             item.setIsReceive(false);
-            item.setImage(baseImage + item.getImage());
+            item.setImage(settingService.fileUrl(item.getImage()));
 
             // 是否领取，且领取量大于限制数
             List<String> statusList = Arrays.asList(UserCouponStatusEnum.UNUSED.getKey(), UserCouponStatusEnum.USED.getKey(), UserCouponStatusEnum.EXPIRE.getKey());

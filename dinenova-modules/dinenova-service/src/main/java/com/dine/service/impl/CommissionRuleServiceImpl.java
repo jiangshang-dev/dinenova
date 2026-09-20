@@ -181,7 +181,6 @@ public class CommissionRuleServiceImpl extends ServiceImpl<MtCommissionRuleMappe
         param.put("STATUS", StatusEnum.ENABLED.getKey());
         List<MtCommissionRuleItem> mtCommissionRuleItems = mtCommissionRuleItemMapper.selectByMap(param);
         List<CommissionRuleItemDto> detailList = new ArrayList<>();
-        String basePath = settingService.getUploadBasePath();
         if (mtCommissionRuleItems != null && mtCommissionRuleItems.size() > 0) {
             for (MtCommissionRuleItem item : mtCommissionRuleItems) {
                  CommissionRuleItemDto commissionRuleItemDto = new CommissionRuleItemDto();
@@ -189,7 +188,7 @@ public class CommissionRuleServiceImpl extends ServiceImpl<MtCommissionRuleMappe
                  MtGoods mtGoods = goodsService.queryGoodsById(item.getTargetId());
                  if (mtGoods != null) {
                      commissionRuleItemDto.setGoodsName(mtGoods.getName());
-                     commissionRuleItemDto.setLogo(basePath + mtGoods.getLogo());
+                     commissionRuleItemDto.setLogo(settingService.fileUrl(mtGoods.getLogo()));
                      commissionRuleItemDto.setPrice(mtGoods.getPrice());
                  }
                  commissionRuleItemDto.setType(item.getType());

@@ -455,9 +455,7 @@ public class UserCouponServiceImpl extends ServiceImpl<MtUserCouponMapper, MtUse
                 dto.setCouponId(couponInfo.getId());
                 dto.setUseRule(couponInfo.getDescription());
 
-                String image = couponInfo.getImage();
-                String baseImage = settingService.getUploadBasePath();
-                dto.setImage(baseImage + image);
+                dto.setImage(settingService.fileUrl(couponInfo.getImage()));
                 dto.setStatus(userCouponDto.getStatus());
                 dto.setAmount(userCouponDto.getAmount());
                 dto.setBalance(userCouponDto.getBalance());

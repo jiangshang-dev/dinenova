@@ -1637,9 +1637,7 @@ public class OrderServiceImpl extends ServiceImpl<MtOrderMapper, MtOrder> implem
                     goodsDto.setNum(Integer.parseInt(item[2]));
                     goodsDto.setPrice(item[0]);
                     goodsDto.setDiscount("0");
-                    if (coupon.getImage().indexOf(baseImage) == -1) {
-                        goodsDto.setImage(baseImage + coupon.getImage());
-                    }
+                    goodsDto.setImage(settingService.fileUrl(coupon.getImage()));
                     goodsList.add(goodsDto);
                 }
             }
@@ -1656,9 +1654,7 @@ public class OrderServiceImpl extends ServiceImpl<MtOrderMapper, MtOrder> implem
                     OrderGoodsDto orderGoodsDto = new OrderGoodsDto();
                     orderGoodsDto.setId(orderGoods.getId());
                     orderGoodsDto.setName(goodsInfo.getName());
-                    if (goodsInfo.getLogo().indexOf(baseImage) == -1) {
-                        orderGoodsDto.setImage(baseImage + goodsInfo.getLogo());
-                    }
+                    orderGoodsDto.setImage(settingService.fileUrl(goodsInfo.getLogo()));
                     orderGoodsDto.setType(OrderTypeEnum.GOOGS.getKey());
                     orderGoodsDto.setNum(orderGoods.getNum());
                     orderGoodsDto.setSkuId(orderGoods.getSkuId());
@@ -1914,8 +1910,8 @@ public class OrderServiceImpl extends ServiceImpl<MtOrderMapper, MtOrder> implem
                     List<GoodsSpecValueDto> specList = goodsService.getSpecListBySkuId(cart.getSkuId());
                     cartDto.setSpecList(specList);
                 }
-                if (StringUtil.isNotEmpty(mtGoodsInfo.getLogo()) && (mtGoodsInfo.getLogo().indexOf(basePath) == -1)) {
-                    mtGoodsInfo.setLogo(basePath + mtGoodsInfo.getLogo());
+                if (StringUtil.isNotEmpty(mtGoodsInfo.getLogo())) {
+                    mtGoodsInfo.setLogo(settingService.fileUrl(mtGoodsInfo.getLogo()));
                 }
                 // 读取sku的数据
                 if (cart.getSkuId() > 0) {
@@ -1923,8 +1919,8 @@ public class OrderServiceImpl extends ServiceImpl<MtOrderMapper, MtOrder> implem
                     BeanUtils.copyProperties(mtGoodsInfo, mtGoods);
                     MtGoodsSku mtGoodsSku = mtGoodsSkuMapper.selectById(cart.getSkuId());
                     if (mtGoodsSku != null) {
-                        if (StringUtil.isNotEmpty(mtGoodsSku.getLogo()) && (mtGoodsSku.getLogo().indexOf(basePath) == -1)) {
-                            mtGoods.setLogo(basePath + mtGoodsSku.getLogo());
+                        if (StringUtil.isNotEmpty(mtGoodsSku.getLogo())) {
+                            mtGoods.setLogo(settingService.fileUrl(mtGoodsSku.getLogo()));
                         }
                         if (mtGoodsSku.getWeight().compareTo(new BigDecimal("0")) > 0) {
                             mtGoods.setWeight(mtGoodsSku.getWeight());

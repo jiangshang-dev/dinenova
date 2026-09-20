@@ -245,11 +245,9 @@ public class BannerServiceImpl extends ServiceImpl<MtBannerMapper, MtBanner> imp
 
         lambdaQueryWrapper.orderByAsc(MtBanner::getSort);
         List<MtBanner> dataList = mtBannerMapper.selectList(lambdaQueryWrapper);
-        String baseImage = settingService.getUploadBasePath();
-
         if (dataList.size() > 0) {
             for (MtBanner banner : dataList) {
-                 banner.setImage(baseImage + banner.getImage());
+                 banner.setImage(settingService.fileUrl(banner.getImage()));
             }
         }
 

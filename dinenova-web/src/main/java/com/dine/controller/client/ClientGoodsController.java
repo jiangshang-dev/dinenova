@@ -16,6 +16,7 @@ import com.dine.framework.pagination.PaginationRequest;
 import com.dine.framework.pagination.PaginationResponse;
 import com.dine.framework.web.BaseController;
 import com.dine.framework.web.ResponseObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.dine.repository.model.*;
 import com.dine.utils.StringUtil;
 import lombok.AllArgsConstructor;
@@ -63,6 +64,11 @@ public class ClientGoodsController extends BaseController {
      * 桌码服务接口
      */
     private TableService tableService;
+
+    /**
+     * 商品加料服务
+     */
+    private MtGoodsFeedService goodsFeedService;
 
     /**
      * 获取商品分类列表
@@ -200,9 +206,10 @@ public class ClientGoodsController extends BaseController {
 
         List<String> images = JSONObject.parseArray(goodsDto.getImages(), String.class);
         List<String> imageList = new ArrayList<>();
-        String baseImage = settingService.getUploadBasePath();
-        for (String image : images) {
-            imageList.add((baseImage + image));
+        if (images != null) {
+            for (String image : images) {
+                imageList.add(settingService.fileUrl(image));
+            }
         }
         goodsDetailDto.setImages(imageList);
 
@@ -248,12 +255,11 @@ public class ClientGoodsController extends BaseController {
         // sku列表
         List<MtGoodsSku> goodsSkuList = goodsDto.getSkuList();
         List<GoodsSkuDto> skuDtoList = new ArrayList<>();
-        String basePath = settingService.getUploadBasePath();
         for (MtGoodsSku sku : goodsSkuList) {
              GoodsSkuDto dto = new GoodsSkuDto();
              dto.setId(sku.getId());
              if (sku.getLogo() != null && StringUtil.isNotEmpty(sku.getLogo())) {
-                 dto.setLogo(basePath + sku.getLogo());
+                 dto.setLogo(settingService.fileUrl(sku.getLogo()));
              } else {
                  dto.setLogo(goodsDetailDto.getLogo());
              }
@@ -281,8 +287,17 @@ public class ClientGoodsController extends BaseController {
             skuDtoList.add(dto);
         }
 
+        List<MtGoodsFeed> goodsFeedList = new ArrayList<>();
+        if (goodsDto.getId() != null && goodsDto.getId() > 0) {
+            LambdaQueryWrapper<MtGoodsFeed> feedQuery = new LambdaQueryWrapper<>();
+            feedQuery.eq(MtGoodsFeed::getGoodsId, goodsDto.getId());
+            feedQuery.orderByAsc(MtGoodsFeed::getSort).orderByAsc(MtGoodsFeed::getFeedId);
+            goodsFeedList = goodsFeedService.list(feedQuery);
+        }
+
         goodsDetailDto.setSpecList(specDtoList);
         goodsDetailDto.setSkuList(skuDtoList);
+        goodsDetailDto.setGoodsFeedList(goodsFeedList);
 
         return getSuccessResult(goodsDetailDto);
     }

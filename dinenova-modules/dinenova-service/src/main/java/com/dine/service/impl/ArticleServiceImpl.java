@@ -94,11 +94,10 @@ public class ArticleServiceImpl extends ServiceImpl<MtArticleMapper, MtArticle> 
         List<MtArticle> articleList = mtArticleMapper.selectList(lambdaQueryWrapper);
         List<ArticleDto> dataList = new ArrayList<>();
 
-        String basePath = settingService.getUploadBasePath();
         for (MtArticle mtArticle : articleList) {
              ArticleDto articleDto = new ArticleDto();
              BeanUtils.copyProperties(mtArticle, articleDto);
-             articleDto.setImage(basePath + mtArticle.getImage());
+             articleDto.setImage(settingService.fileUrl(mtArticle.getImage()));
              dataList.add(articleDto);
         }
 
@@ -174,8 +173,7 @@ public class ArticleServiceImpl extends ServiceImpl<MtArticleMapper, MtArticle> 
         MtArticle mtArticle = mtArticleMapper.selectById(articleId);
         ArticleDto articleDto = new ArticleDto();
         BeanUtils.copyProperties(mtArticle, articleDto);
-        String baseImage = settingService.getUploadBasePath();
-        articleDto.setImage(baseImage + mtArticle.getImage());
+        articleDto.setImage(settingService.fileUrl(mtArticle.getImage()));
         return articleDto;
     }
 
@@ -264,11 +262,10 @@ public class ArticleServiceImpl extends ServiceImpl<MtArticleMapper, MtArticle> 
 
         lambdaQueryWrapper.orderByAsc(MtArticle::getSort);
         List<MtArticle> dataList = mtArticleMapper.selectList(lambdaQueryWrapper);
-        String baseImage = settingService.getUploadBasePath();
 
         if (dataList.size() > 0) {
             for (MtArticle article : dataList) {
-                 article.setImage(baseImage + article.getImage());
+                 article.setImage(settingService.fileUrl(article.getImage()));
             }
         }
 

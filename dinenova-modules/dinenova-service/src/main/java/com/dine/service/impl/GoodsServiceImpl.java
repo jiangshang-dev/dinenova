@@ -134,7 +134,6 @@ public class GoodsServiceImpl extends ServiceImpl<MtGoodsMapper, MtGoods> implem
         lambdaQueryWrapper.orderByAsc(MtGoods::getSort);
         List<MtGoods> goodsList = mtGoodsMapper.selectList(lambdaQueryWrapper);
         List<GoodsDto> dataList = new ArrayList<>();
-        String basePath = settingService.getUploadBasePath();
         for (MtGoods mtGoods : goodsList) {
             MtGoodsCate cateInfo = null;
             if (mtGoods.getCateId() != null) {
@@ -144,7 +143,7 @@ public class GoodsServiceImpl extends ServiceImpl<MtGoodsMapper, MtGoods> implem
             item.setId(mtGoods.getId());
             item.setInitSale(mtGoods.getInitSale());
             if (StringUtil.isNotEmpty(mtGoods.getLogo())) {
-                item.setLogo(basePath + mtGoods.getLogo());
+                item.setLogo(settingService.fileUrl(mtGoods.getLogo()));
             }
             item.setStoreId(mtGoods.getStoreId());
             if (mtGoods.getStoreId() != null) {
@@ -190,7 +189,7 @@ public class GoodsServiceImpl extends ServiceImpl<MtGoodsMapper, MtGoods> implem
     @OperationServiceLog(description = "保存商品信息")
     public MtGoods saveGoods(MtGoods reqDto) throws BusinessCheckException {
         MtGoods mtGoods = new MtGoods();
-        if (reqDto.getId() > 0) {
+        if (reqDto.getId() != null && reqDto.getId() > 0) {
             mtGoods = queryGoodsById(reqDto.getId());
             reqDto.setMerchantId(mtGoods.getMerchantId());
         }
@@ -397,9 +396,8 @@ public class GoodsServiceImpl extends ServiceImpl<MtGoodsMapper, MtGoods> implem
             }
         }
 
-        String basePath = settingService.getUploadBasePath();
         if (StringUtil.isNotEmpty(goodsInfo.getLogo())) {
-            goodsInfo.setLogo(basePath + goodsInfo.getLogo());
+            goodsInfo.setLogo(settingService.fileUrl(goodsInfo.getLogo()));
         }
 
         // 规格列表
@@ -412,7 +410,7 @@ public class GoodsServiceImpl extends ServiceImpl<MtGoodsMapper, MtGoods> implem
         goodsInfo.setSpecList(goodsSpecList);
 
         // sku列表
-        if (goodsInfo.getIsSingleSpec().equals(YesOrNoEnum.NO.getKey())) {
+        if (YesOrNoEnum.NO.getKey().equals(goodsInfo.getIsSingleSpec())) {
             List<MtGoodsSku> goodsSkuList = mtGoodsSkuMapper.selectByMap(param);
             goodsInfo.setSkuList(goodsSkuList);
             // 多规格商品的价格、库存数量

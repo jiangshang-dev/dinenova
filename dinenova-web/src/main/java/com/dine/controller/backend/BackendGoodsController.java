@@ -19,6 +19,7 @@ import com.dine.framework.pagination.PaginationRequest;
 import com.dine.framework.pagination.PaginationResponse;
 import com.dine.framework.web.BaseController;
 import com.dine.framework.web.ResponseObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.dine.repository.mapper.MtGoodsSkuMapper;
 import com.dine.repository.mapper.MtGoodsSpecMapper;
 import com.dine.repository.model.*;
@@ -44,34 +45,38 @@ import java.util.*;
 @RequestMapping(value = "/backendApi/goods/goods")
 public class BackendGoodsController extends BaseController {
 
-    private MtGoodsSpecMapper mtGoodsSpecMapper;
-
-    private MtGoodsSkuMapper mtGoodsSkuMapper;
+    private final MtGoodsSpecMapper mtGoodsSpecMapper;
+    private final MtGoodsSkuMapper mtGoodsSkuMapper;
 
     /**
      * 商品服务接口
      */
-    private GoodsService goodsService;
+    private final GoodsService goodsService;
 
     /**
      * 商品分类服务接口
      */
-    private CateService cateService;
+    private final CateService cateService;
 
     /**
      * 店铺服务接口
      */
-    private StoreService storeService;
+    private final StoreService storeService;
 
     /**
      * 后台账户服务接口
      */
-    private AccountService accountService;
+    private final AccountService accountService;
 
     /**
      * 系统设置服务接口
      * */
-    private SettingService settingService;
+    private final SettingService settingService;
+
+    /**
+     * 商品加料服务
+     */
+    private final MtGoodsFeedService goodsFeedService;
 
     /**
      * 分页查询商品列表
@@ -328,6 +333,19 @@ public class BackendGoodsController extends BaseController {
         result.put("specData", specArr);
         result.put("skuData", skuArr);
 
+        List<MtGoodsFeed> feedList = new ArrayList<>();
+        if (goodsId != null && goodsId > 0) {
+            try {
+                LambdaQueryWrapper<MtGoodsFeed> feedQuery = new LambdaQueryWrapper<>();
+                feedQuery.eq(MtGoodsFeed::getGoodsId, goodsId);
+                feedQuery.orderByAsc(MtGoodsFeed::getSort).orderByAsc(MtGoodsFeed::getFeedId);
+                feedList = goodsFeedService.list(feedQuery);
+            } catch (Exception e) {
+                feedList = new ArrayList<>();
+            }
+        }
+        result.put("feedData", feedList);
+
         Map<String, Object> param = new HashMap<>();
         param.put("status", StatusEnum.ENABLED.getKey());
         if (accountInfo.getMerchantId() != null && accountInfo.getMerchantId() > 0) {
@@ -411,6 +429,7 @@ public class BackendGoodsController extends BaseController {
         String serviceTime = param.get("serviceTime") == null ? "0" : param.get("serviceTime").toString();
         List<LinkedHashMap> skuList = param.get("skuData") == null ? new ArrayList<>() : (List) param.get("skuData");
         List<LinkedHashMap> specList = param.get("specData") == null ? new ArrayList<>() : (List) param.get("specData");
+        List<LinkedHashMap> productFeedList = param.get("feedData") == null ? new ArrayList<>() : (List) param.get("feedData");
 
         // 保存规格名称
         if (specList.size() > 0) {
@@ -583,11 +602,46 @@ public class BackendGoodsController extends BaseController {
         mtGoods.setOperator(accountInfo.getAccountName());
 
         MtGoods goodsInfo = goodsService.saveGoods(mtGoods);
+        saveGoodsFeeds(goodsInfo.getId(), productFeedList, isSingleSpec);
 
         Map<String, Object> result = new HashMap();
         result.put("goodsInfo", goodsInfo);
 
         return getSuccessResult(result);
+    }
+
+    private void saveGoodsFeeds(Integer goodsId, List<LinkedHashMap> productFeedList, String isSingleSpec) {
+        if (goodsId == null || goodsId <= 0) {
+            return;
+        }
+        boolean replaceFeeds = YesOrNoEnum.NO.getKey().equals(isSingleSpec) || (productFeedList != null && productFeedList.size() > 0);
+        if (!replaceFeeds) {
+            return;
+        }
+        LambdaQueryWrapper<MtGoodsFeed> deleteQw = new LambdaQueryWrapper<>();
+        deleteQw.eq(MtGoodsFeed::getGoodsId, goodsId);
+        goodsFeedService.remove(deleteQw);
+        if (productFeedList == null || productFeedList.size() < 1) {
+            return;
+        }
+        List<MtGoodsFeed> list = new ArrayList<>();
+        for (LinkedHashMap map : productFeedList) {
+            if (map.get("feedName") == null || StringUtil.isEmpty(map.get("feedName").toString())) {
+                continue;
+            }
+            MtGoodsFeed goodsFeed = new MtGoodsFeed();
+            goodsFeed.setFeedName(map.get("feedName").toString());
+            goodsFeed.setGoodsId(goodsId);
+            Object priceObj = map.get("price");
+            goodsFeed.setPrice(priceObj == null || StringUtil.isEmpty(priceObj.toString()) ? BigDecimal.ZERO : new BigDecimal(priceObj.toString()));
+            goodsFeed.setSort(0);
+            goodsFeed.setCreateTime(new Date());
+            goodsFeed.setUpdateTime(new Date());
+            list.add(goodsFeed);
+        }
+        if (list.size() > 0) {
+            goodsFeedService.saveBatch(list);
+        }
     }
 
     /**

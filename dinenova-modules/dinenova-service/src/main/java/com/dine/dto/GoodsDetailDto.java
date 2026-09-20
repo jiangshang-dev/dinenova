@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
+import com.dine.repository.model.MtGoodsFeed;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -91,6 +93,9 @@ public class GoodsDetailDto implements Serializable {
 
     @Schema(description = "规格列表")
     private List<GoodsSpecDto> specList;
+
+    @Schema(description = "加料列表")
+    private List<MtGoodsFeed> goodsFeedList;
 
 }
 

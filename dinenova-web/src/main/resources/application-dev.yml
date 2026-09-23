@@ -26,8 +26,8 @@ dinenova:
   #配置文件存储服务类型，可选配置[local,aliyun,minio,rustfs]
   oss:
     type: aliyun
-    accessKey: LTAI5tAMhyQ5M4ax36oedKcQ
-    secretKey: DqOLunL4Qt8bWSxhi2mEktfcUKacVG
+    accessKey: yourAccessKey
+    secretKey: yourSecretKey
     endpoint: oss-cn-beijing.aliyuncs.com
     bucketName: dinenova
     folder: uploads
